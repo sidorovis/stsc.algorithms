@@ -57,7 +57,6 @@
             		<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
         		</configuration>
 			</plugin>
-
 	</plugins>
   </build>
 	<modules>

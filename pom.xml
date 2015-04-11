@@ -19,18 +19,10 @@
 	    <repository>
     	  	<id>stsc-common-mvn-repo</id>
      		<url>https://raw.github.com/sidorovis/stsc/stsc.common/</url>
-        	<snapshots>
-	            <enabled>true</enabled>
-    	        <updatePolicy>always</updatePolicy>
-        	</snapshots>
    		</repository>
 	    <repository>
     	  	<id>stsc-signals-mvn-repo</id>
      		<url>https://raw.github.com/sidorovis/stsc/stsc.signals/</url>
-        	<snapshots>
-	            <enabled>true</enabled>
-    	        <updatePolicy>always</updatePolicy>
-        	</snapshots>
    		</repository>
 	</repositories>
 
@@ -50,13 +42,13 @@
        		<target>1.8</target>
    		</configuration>
 	</plugin>
-   			<plugin>
-        		<artifactId>maven-deploy-plugin</artifactId>
-        		<version>2.8.1</version>
-        		<configuration>
-            		<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-        		</configuration>
-			</plugin>
+   	<plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+            <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+        </configuration>
+	</plugin>
 	</plugins>
   </build>
 	<modules>

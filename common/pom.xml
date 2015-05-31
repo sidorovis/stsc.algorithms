@@ -4,7 +4,7 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.algorithms.common</artifactId>
-	<version>0.0.17-PROSEP</version>
+	<version>0.0.18-WEBINTERFACE</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.algorithms.common</name>
@@ -87,12 +87,12 @@
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.common</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.signals</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.17-PROSEP</version>
 		</dependency>
 
 		<dependency>

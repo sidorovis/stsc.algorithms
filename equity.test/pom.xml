@@ -4,7 +4,7 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.algorithms.equity.test</artifactId>
-	<version>0.0.17-PROSEP</version>
+	<version>0.0.18-WEBINTERFACE</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.algorithms.equity.test</name>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.algorithms.common</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 
 		<dependency>

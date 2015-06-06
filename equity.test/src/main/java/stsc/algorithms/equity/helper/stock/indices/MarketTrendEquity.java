@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Map.Entry;
 
-import stsc.algorithms.stock.indices.MarketTrend;
+import stsc.algorithms.indices.stock.MarketTrend;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Side;

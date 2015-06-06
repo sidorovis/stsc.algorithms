@@ -3,7 +3,7 @@ package stsc.algorithms;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.eod.primitive.TestingEodAlgorithm;
+import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.algorithms.testhelper.TestAlgorithmsHelper;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
@@ -23,9 +23,8 @@ public final class EodAlgorithmExecutionTest {
 
 	@Test
 	public void testNameInstallingMethod() throws BadAlgorithmException {
-		final EodExecution eae = new EodExecution("e1", "stsc.algorithms.eod.primitive.TestingEodAlgorithm",
-				TestAlgorithmsHelper.getSettings());
-		Assert.assertEquals("stsc.algorithms.eod.primitive.TestingEodAlgorithm", eae.getAlgorithmName());
+		final EodExecution eae = new EodExecution("e1", "stsc.algorithms.primitive.eod.TestingEodAlgorithm", TestAlgorithmsHelper.getSettings());
+		Assert.assertEquals("stsc.algorithms.primitive.eod.TestingEodAlgorithm", eae.getAlgorithmName());
 	}
 
 	@Test

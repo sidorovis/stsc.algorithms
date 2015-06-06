@@ -3,7 +3,7 @@ package stsc.algorithms.helpers.stock;
 import java.util.List;
 import java.util.Optional;
 
-import stsc.algorithms.stock.geometry.FibonacciRetracementBearStdDev;
+import stsc.algorithms.geometry.stock.FibonacciRetracementBearStdDev;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;

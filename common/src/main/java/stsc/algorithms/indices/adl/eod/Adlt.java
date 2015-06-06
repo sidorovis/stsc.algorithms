@@ -1,10 +1,10 @@
-package stsc.algorithms.eod.indices.adl;
+package stsc.algorithms.indices.adl.eod;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Map.Entry;
 
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -16,11 +16,11 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class AdlAdl extends EodAlgorithm {
+public class Adlt extends EodAlgorithm {
 
 	private final Map<String, Double> lastPrices = new HashMap<>();
 
-	public AdlAdl(EodAlgorithmInit init) throws BadAlgorithmException {
+	public Adlt(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 	}
 
@@ -32,8 +32,9 @@ public class AdlAdl extends EodAlgorithm {
 
 	@Override
 	public void process(Date date, HashMap<String, Day> datafeed) throws BadSignalException {
-		int at = 0;
-		int dt = 0;
+		double at = 0;
+		double dt = 0;
+		double ut = 0;
 		for (Entry<String, Day> e : datafeed.entrySet()) {
 			final Day d = e.getValue();
 			final Double close = d.getPrices().getClose();
@@ -42,17 +43,24 @@ public class AdlAdl extends EodAlgorithm {
 				v = close;
 			}
 			lastPrices.put(e.getKey(), close);
-			if (close >= v) {
+			if (close > v) {
 				at += 1;
-			} else {
+			} else if (close < v) {
 				dt += 1;
+			} else {
+				ut += 1;
 			}
 		}
 		final int index = getCurrentIndex();
 		if (index == 0) {
 			addSignal(date, new DoubleSignal(0.0));
 		} else {
-			addSignal(date, new DoubleSignal(at - dt + getSignal(index - 1).getContent(DoubleSignal.class).getValue()));
+			if (Double.compare(at + dt + ut, 0.0) == 0) {
+				addSignal(date, new DoubleSignal(getSignal(index - 1).getContent(DoubleSignal.class).getValue()));
+			} else {
+				final double newAdditional = (at - dt) / (at + dt + ut);
+				addSignal(date, new DoubleSignal(newAdditional + getSignal(index - 1).getContent(DoubleSignal.class).getValue()));
+			}
 		}
 	}
 

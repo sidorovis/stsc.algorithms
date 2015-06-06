@@ -47,6 +47,9 @@ public class FibonacciRetracementBearStdDev extends StockAlgorithm {
 			return;
 		}
 		final Optional<DoubleSignal> firstSignal = getSignal(subAlgoName, currentIndex - N).getSignal(DoubleSignal.class);
+		if (!firstSignal.isPresent()) {
+			return;
+		}
 		final double lastValue = lastSignal.get().getValue();
 		final double firstValue = firstSignal.get().getValue();
 		if (lastValue > firstValue) {

@@ -12,6 +12,11 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
+/**
+ * Input on Stock Algorithm - returns series of data from {@link Day}. With 'e'
+ * parameter, you can return OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day}
+ * class.
+ */
 public class Input extends StockAlgorithm {
 
 	enum DayField {

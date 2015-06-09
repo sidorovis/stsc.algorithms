@@ -44,7 +44,7 @@ public class OpenWhileSignalAlgorithm extends EodAlgorithm {
 		for (Map.Entry<String, Day> i : datafeed.entrySet()) {
 			final String stockName = i.getKey();
 			final SignalContainer<? extends SerieSignal> isSignal = getSignal(stockName, sideSignalAlgoName, date);
-			if (isSignal == null) {
+			if (!isSignal.isPresent()) {
 				if (shortPositions.containsKey(stockName)) {
 					broker().sell(stockName, Side.SHORT, shortPositions.get(stockName).getSharedAmount());
 					shortPositions.remove(stockName);

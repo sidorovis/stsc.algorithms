@@ -48,7 +48,7 @@ public class LeastSquaresQuadraticValue extends StockAlgorithm {
 	@Override
 	public void process(Day day) throws BadSignalException {
 		final SignalContainer<? extends SerieSignal> signal = getSignal(subExecutionName, day.getDate());
-		if (signal == null) {
+		if (!signal.isPresent()) {
 			return;
 		}
 		final double yValue = signal.getContent(DoubleSignal.class).getValue();

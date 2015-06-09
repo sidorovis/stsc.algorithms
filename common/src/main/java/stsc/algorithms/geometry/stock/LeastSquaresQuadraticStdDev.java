@@ -59,7 +59,7 @@ public class LeastSquaresQuadraticStdDev extends StockAlgorithm {
 		lsq.process(day);
 		final SignalContainer<? extends SerieSignal> subSerieValue = getSignal(subExecutionName, day.getDate());
 		final SignalContainer<? extends SerieSignal> lsqValue = getSignal(lsqName, day.getDate());
-		if (subSerieValue == null || lsqValue == null) {
+		if (!subSerieValue.isPresent() || !lsqValue.isPresent()) {
 			return;
 		}
 		y.addLast(subSerieValue.getContent(DoubleSignal.class).getValue());

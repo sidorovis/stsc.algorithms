@@ -4,10 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Map.Entry;
+import java.util.Optional;
 
-import stsc.algorithms.indices.stock.MarketTrend;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Side;
@@ -35,7 +34,7 @@ public class MarketTrendEquity extends EodAlgorithm {
 		super(init);
 		final List<String> subExecutions = init.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1) {
-			throw new BadAlgorithmException(MarketTrend.class.toString() + " require at least one sub execution parameter");
+			throw new BadAlgorithmException(MarketTrendEquity.class.toString() + " require at least one sub execution parameter");
 		}
 		subExecution = subExecutions.get(0);
 		positionSharesSize = init.getSettings().getIntegerSetting("PSS", 100).getValue();

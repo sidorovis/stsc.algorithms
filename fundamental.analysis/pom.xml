@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>stsc</groupId>
-	<artifactId>stsc.algorithms.index.based</artifactId>
+	<artifactId>stsc.algorithms.fundamental.analysis</artifactId>
 	<version>0.0.18-WEBINTERFACE</version>
 	<packaging>jar</packaging>
 
@@ -66,7 +66,7 @@
                 <message>#3 Deployment of new stsc.algorithms.index.based library ${project.version}</message>
                 <noJekyll>true</noJekyll>
                 <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-                <branch>refs/heads/stsc.algorithms.index.based</branch>
+                <branch>refs/heads/stsc.algorithms.fundamental.analysis</branch>
                 <includes><include>**/*</include></includes>
                 <repositoryName>stsc</repositoryName>
                 <repositoryOwner>sidorovis</repositoryOwner>
@@ -117,5 +117,5 @@
 			<version>18.0</version>
 		</dependency>
 	</dependencies>
-	<description>Stsc algorithms index based is a bunch of algorithms which depend on 'business' market information about on stock indexes.</description>
+	<description>Stsc algorithms fundamental.analysis is a bunch of algorithms which depend on 'business' market information about on stock indexes.</description>
 </project>

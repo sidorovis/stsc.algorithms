@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.DoubleDV;
-
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -22,35 +20,29 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * TODO rename me to MovingPearsonCorrelation
+ * {@link MovingPearsonCorrelation} end of day algorithm that calculate moving
+ * correlation coefficient for all possible pairs using Pearson model.</br> TODO
+ * create map for exit
  */
-public final class Correlation extends EodAlgorithm {
+public final class MovingPearsonCorrelation extends EodAlgorithm {
 
 	private final class OnStockData {
-		public double sum = 0.0;
-		public int count = 0;
 		public LinkedList<Double> elements = new LinkedList<>();
-		public Date lastIndexDate;
 
-		public OnStockData(Entry<String, Day> e) {
-			processNewEntry(e);
+		public OnStockData() {
 		}
 
 		public void processNewEntry(Entry<String, Day> e) {
 			final double v = getValue(e.getValue());
-			sum += v;
-			count += 1;
 			elements.add(v);
-			lastIndexDate = e.getValue().getDate();
 			if (elements.size() > correlationLength) {
-				final double deletedV = elements.poll().doubleValue();
-				sum -= deletedV;
+				elements.poll().doubleValue();
 			}
 		}
 
 		public double getAverageForLast(int n) {
 			final Iterator<Double> eIter = elements.iterator();
-			if (n >= elements.size()) {
+			if (n > elements.size()) {
 				return 0.0;
 			}
 			for (int i = 0; i < elements.size() - n; ++i) {
@@ -69,9 +61,9 @@ public final class Correlation extends EodAlgorithm {
 
 	private final Map<String, OnStockData> onStock = new HashMap<>();
 
-	public Correlation(final EodAlgorithmInit init) throws BadAlgorithmException {
+	public MovingPearsonCorrelation(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.correlationLength = init.getSettings().getIntegerSetting("N", 5).getValue().intValue();
+		this.correlationLength = init.getSettings().getIntegerSetting("N", 22).getValue().intValue();
 
 	}
 
@@ -104,6 +96,9 @@ public final class Correlation extends EodAlgorithm {
 			left = right;
 			right = swap;
 		}
+		if (correlationLength / 2.0 > left.elements.size() || correlationLength / 2.0 > right.elements.size()) {
+			return 0.0;
+		}
 
 		final Iterator<Double> leftIter = left.elements.iterator();
 		final Iterator<Double> rightIter = right.elements.iterator();
@@ -113,8 +108,8 @@ public final class Correlation extends EodAlgorithm {
 		double covxy = 0.0;
 		double sumSigmaLeft = 0.0;
 		double sumSigmaRight = 0.0;
-		final double leftAverage = left.getAverageForLast(right.elements.size() - left.elements.size());
-		final double rightAverage = right.getAverageForLast(right.elements.size() - left.elements.size());
+		final double leftAverage = left.getAverageForLast(right.elements.size() - left.elements.size() + 1);
+		final double rightAverage = right.getAverageForLast(right.elements.size() - left.elements.size() + 1);
 		while (rightIter.hasNext()) {
 			final double lvDiff = leftIter.next() - leftAverage;
 			final double rvDiff = rightIter.next() - rightAverage;
@@ -129,7 +124,7 @@ public final class Correlation extends EodAlgorithm {
 	private void addEntry(Entry<String, Day> e) {
 		OnStockData osd = onStock.get(e.getKey());
 		if (osd == null) {
-			osd = new OnStockData(e);
+			osd = new OnStockData();
 			onStock.put(e.getKey(), osd);
 		}
 		osd.processNewEntry(e);

@@ -63,7 +63,6 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 	public MovingPearsonCorrelation(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.correlationLength = init.getSettings().getIntegerSetting("N", 22).getValue().intValue();
-
 	}
 
 	@Override

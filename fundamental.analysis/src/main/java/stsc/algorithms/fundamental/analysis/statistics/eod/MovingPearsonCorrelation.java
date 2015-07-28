@@ -16,13 +16,12 @@ import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.EodAlgorithmInit;
 import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
-import stsc.signals.DoubleSignal;
+import stsc.signals.MapKeyPairToDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
  * {@link MovingPearsonCorrelation} end of day algorithm that calculate moving
- * correlation coefficient for all possible pairs using Pearson model.</br> TODO
- * create map for exit
+ * correlation coefficient for all possible pairs using Pearson model.<br/>
  */
 public final class MovingPearsonCorrelation extends EodAlgorithm {
 
@@ -70,7 +69,7 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(EodAlgorithmInit init) throws BadAlgorithmException {
 		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
-		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
+		return Optional.of(new LimitSignalsSerie<>(MapKeyPairToDoubleSignal.class, size));
 	}
 
 	@Override
@@ -79,15 +78,16 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 			addEntry(e);
 		}
 		final ArrayList<String> stockNames = new ArrayList<>(datafeed.keySet());
+		final MapKeyPairToDoubleSignal.Builder builder = MapKeyPairToDoubleSignal.builder();
 		for (int i = 0; i < stockNames.size(); ++i) {
 			for (int u = i + 1; u < stockNames.size(); ++u) {
 				final OnStockData left = onStock.get(stockNames.get(i));
 				final OnStockData right = onStock.get(stockNames.get(u));
 				final double correlationValue = calculateCorrelationFor(date, left, right);
-				addSignal(date, new DoubleSignal(correlationValue));
-				return;
+				builder.addValue(stockNames.get(i), stockNames.get(u), correlationValue);
 			}
 		}
+		addSignal(date, builder.build());
 	}
 
 	private double calculateCorrelationFor(final Date date, OnStockData left, OnStockData right) {

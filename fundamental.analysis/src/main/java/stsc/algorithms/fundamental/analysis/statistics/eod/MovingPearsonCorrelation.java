@@ -25,6 +25,12 @@ import stsc.signals.series.LimitSignalsSerie;
  */
 public final class MovingPearsonCorrelation extends EodAlgorithm {
 
+	/**
+	 * {@link OnStockData} stores last
+	 * {@link MovingPearsonCorrelation#correlationLength} elements for one of
+	 * the stocks. And provide interface to calculate average value for 'n' last
+	 * elements.
+	 */
 	private final class OnStockData {
 		public LinkedList<Double> elements = new LinkedList<>();
 
@@ -34,7 +40,7 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 		public void processNewEntry(Entry<String, Day> e) {
 			final double v = getValue(e.getValue());
 			elements.add(v);
-			if (elements.size() > correlationLength) {
+			if (elements.size() > getCorrelationLength()) {
 				elements.poll().doubleValue();
 			}
 		}
@@ -66,13 +72,13 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 	}
 
 	@Override
-	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(EodAlgorithmInit init) throws BadAlgorithmException {
+	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final EodAlgorithmInit init) throws BadAlgorithmException {
 		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
 		return Optional.of(new LimitSignalsSerie<>(MapKeyPairToDoubleSignal.class, size));
 	}
 
 	@Override
-	public void process(Date date, HashMap<String, Day> datafeed) throws BadSignalException {
+	public void process(final Date date, final HashMap<String, Day> datafeed) throws BadSignalException {
 		for (Entry<String, Day> e : datafeed.entrySet()) {
 			addEntry(e);
 		}
@@ -120,7 +126,7 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 
 	}
 
-	private void addEntry(Entry<String, Day> e) {
+	private void addEntry(final Entry<String, Day> e) {
 		OnStockData osd = onStock.get(e.getKey());
 		if (osd == null) {
 			osd = new OnStockData();
@@ -133,4 +139,7 @@ public final class MovingPearsonCorrelation extends EodAlgorithm {
 		return day.getPrices().getOpen();
 	}
 
+	private int getCorrelationLength() {
+		return correlationLength;
+	}
 }

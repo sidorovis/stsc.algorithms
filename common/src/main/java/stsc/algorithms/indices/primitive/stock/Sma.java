@@ -15,7 +15,7 @@ import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class Sma extends StockAlgorithm {
+public final class Sma extends StockAlgorithm {
 
 	private final String subAlgoName;
 	private final AlgorithmSetting<Integer> N;

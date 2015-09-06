@@ -2,10 +2,17 @@ package stsc.algorithms;
 
 import stsc.common.Side;
 
-public class EodPosition {
-	final String stockName;
-	final Side side;
-	int sharesAmount;
+/**
+ * {@link EodPosition} store information about end of day market position for
+ * one tradeable element (stock). Store stockName (string), {@link Side} side of
+ * the position long or short, shares amount (amount of bought shares,
+ * positive).
+ */
+public final class EodPosition {
+
+	private final String stockName;
+	private final Side side;
+	private int sharesAmount;
 
 	public int getSharedAmount() {
 		return sharesAmount;

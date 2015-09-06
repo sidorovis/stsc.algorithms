@@ -17,13 +17,19 @@ import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class Sma extends EodAlgorithm {
+/**
+ * Simple Moving Average algorithm. Works on serie of Double and output serie of
+ * Double. This is end of day algorithm to process EOD output sub-executions.
+ * TODO think how to unite with
+ * {@link stsc.algorithms.indices.primitive.stock.Sma}.
+ */
+public final class Sma extends EodAlgorithm {
 
 	private final String subAlgoName;
 	private final AlgorithmSetting<Integer> N;
 
-	final LinkedList<Double> elements = new LinkedList<>();
-	Double sum = Double.valueOf(0.0);
+	private final LinkedList<Double> elements = new LinkedList<>();
+	private Double sum = Double.valueOf(0.0);
 
 	public Sma(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);

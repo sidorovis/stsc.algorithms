@@ -2,9 +2,15 @@ package stsc.algorithms;
 
 import stsc.common.algorithms.AlgorithmSetting;
 
+/**
+ * Implementation for AlgorithmSetting, still more abstract than concrete. Also
+ * store class of value, so serie of elements will check that setting is
+ * suitable.
+ */
 public final class AlgorithmSettingImpl<T> implements AlgorithmSetting<T> {
+
 	private T value;
-	final private Class<T> clazz;
+	private final Class<T> clazz;
 
 	@SuppressWarnings("unchecked")
 	public AlgorithmSettingImpl(final T defaultValue) {

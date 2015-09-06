@@ -13,7 +13,12 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class ListOfDoubleAdapter extends StockAlgorithm {
+/**
+ * Algorithm could be used for adapting {@link ListOfDoubleSignal} to
+ * {@link DoubleSignal}. This could be used to represent data into graphic view
+ * on user interface. Or to generate serie of double's. //
+ */
+public final class ListOfDoubleAdapter extends StockAlgorithm {
 
 	private final String subAlgoName;
 	private final Integer I;
@@ -34,7 +39,6 @@ public class ListOfDoubleAdapter extends StockAlgorithm {
 
 	@Override
 	public void process(Day day) throws BadSignalException {
-		addSignal(day.getDate(), new DoubleSignal(getSignal(subAlgoName, day.getDate()).getContent(ListOfDoubleSignal.class).getValues()
-				.get(I)));
+		addSignal(day.getDate(), new DoubleSignal(getSignal(subAlgoName, day.getDate()).getContent(ListOfDoubleSignal.class).getValues().get(I)));
 	}
 }

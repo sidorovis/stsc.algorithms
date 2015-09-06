@@ -17,7 +17,7 @@ import stsc.signals.series.LimitSignalsSerie;
  * parameter, you can return OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day}
  * class.
  */
-public class Input extends StockAlgorithm {
+public final class Input extends StockAlgorithm {
 
 	enum DayField {
 		OPEN, HIGH, LOW, CLOSE, VALUE

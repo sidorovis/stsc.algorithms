@@ -24,11 +24,11 @@ import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 
-/*
- * PositionNDayMStocks open position for n days on m stocks in long and short sides
- * 
+/**
+ * PositionNDayMStocks open position for n days on m stocks in long and short
+ * sides
  */
-public class PositionNDayMStocks extends EodAlgorithm {
+public final class PositionNDayMStocks extends EodAlgorithm {
 
 	private final AlgorithmSetting<Integer> n;
 	private final AlgorithmSetting<Integer> m;

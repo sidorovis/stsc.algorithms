@@ -17,7 +17,15 @@ import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 
-public class MarketTrendEquity extends EodAlgorithm {
+/**
+ * First test attempt to implement market trend based algorithm. <br/>
+ * Has 4 borders: <br/>
+ * 1. When we should open Long;<br/>
+ * 2. When we should close Long;<br/>
+ * 3. When we should open Short;<br/>
+ * 4. When we should close Short.<br/>
+ */
+public final class MarketTrendEquity extends EodAlgorithm {
 
 	private final int positionSharesSize;
 	private final String subExecution;
@@ -30,7 +38,7 @@ public class MarketTrendEquity extends EodAlgorithm {
 	private final Map<String, Integer> longPositions = new HashMap<>();
 	private final Map<String, Integer> shortPositions = new HashMap<>();
 
-	public MarketTrendEquity(EodAlgorithmInit init) throws BadAlgorithmException {
+	public MarketTrendEquity(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		final List<String> subExecutions = init.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1) {
@@ -45,12 +53,12 @@ public class MarketTrendEquity extends EodAlgorithm {
 	}
 
 	@Override
-	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(EodAlgorithmInit init) throws BadAlgorithmException {
+	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final EodAlgorithmInit init) throws BadAlgorithmException {
 		return Optional.empty();
 	}
 
 	@Override
-	public void process(Date date, HashMap<String, Day> datafeed) throws BadSignalException {
+	public void process(final Date date, final HashMap<String, Day> datafeed) throws BadSignalException {
 		for (Entry<String, Day> e : datafeed.entrySet()) {
 			final String stockName = e.getKey();
 			final double v = getSignal(e.getKey(), subExecution, date).getContent(DoubleSignal.class).getValue();
@@ -58,7 +66,7 @@ public class MarketTrendEquity extends EodAlgorithm {
 		}
 	}
 
-	private void processStock(String stockName, double v) {
+	private void processStock(final String stockName, final double v) {
 		if (longPositions.containsKey(stockName)) {
 			if (v < closeLongBorder) {
 				broker().sell(stockName, Side.LONG, positionSharesSize);
@@ -79,5 +87,4 @@ public class MarketTrendEquity extends EodAlgorithm {
 			}
 		}
 	}
-
 }

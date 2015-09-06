@@ -28,7 +28,7 @@ import stsc.signals.series.LimitSignalsSerie;
  * default UP = {@link Double#MAX_VALUE}, DOWN = -{@link Double#MAX_VALUE}, ALL
  * = {@link Double#MAX_VALUE}.
  */
-public class AlgorithmsLimiter extends StockAlgorithm {
+public final class AlgorithmsLimiter extends StockAlgorithm {
 
 	private final String subAlgoName;
 	private final double up;

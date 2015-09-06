@@ -30,10 +30,10 @@ import stsc.common.signals.SignalsSerie;
  * After first open keep positions opened till end of testing period.
  * <hr/>
  */
-public class OneSideOpenAlgorithm extends EodAlgorithm {
+public final class OneSideOpenAlgorithm extends EodAlgorithm {
 
-	final Side side;
-	boolean opened = false;
+	private final Side side;
+	private boolean opened = false;
 
 	public OneSideOpenAlgorithm(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
@@ -56,11 +56,9 @@ public class OneSideOpenAlgorithm extends EodAlgorithm {
 			return;
 		if (datafeed.isEmpty())
 			return;
-
 		for (Map.Entry<String, Day> i : datafeed.entrySet()) {
 			broker().buy(i.getKey(), side, 100);
 		}
-
 		opened = true;
 	}
 }

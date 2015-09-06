@@ -17,13 +17,18 @@ import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
 import stsc.signals.SideSignal;
 
-public class OpenWhileSignalAlgorithm extends EodAlgorithm {
+/**
+ * Algorithm require sub execution with {@link SideSignal} output. This
+ * algorithm will open all signaled stocks and keep them open until signal
+ * exists. <br/>
+ */
+public final class OpenWhileSignalAlgorithm extends EodAlgorithm {
 
 	private final HashMap<String, EodPosition> shortPositions = new HashMap<>();
 	private final HashMap<String, EodPosition> longPositions = new HashMap<>();
 
-	private double P;
-	private String sideSignalAlgoName;
+	private final double P;
+	private final String sideSignalAlgoName;
 
 	public OpenWhileSignalAlgorithm(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);

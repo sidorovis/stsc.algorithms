@@ -16,7 +16,12 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.CommonSignalsSerie;
 
-public class EodOutput extends EodAlgorithm {
+/**
+ * End of day output algorithm. Pretty the same with {@link Output} but for end
+ * of day algorithm. TODO consider possibility to unite with {@link Output} at
+ * one compilation unit.
+ */
+public final class EodOutput extends EodAlgorithm {
 
 	final String fromExecution;
 

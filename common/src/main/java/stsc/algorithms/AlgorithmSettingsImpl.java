@@ -16,6 +16,15 @@ import stsc.common.algorithms.AlgorithmSettings;
 import stsc.common.algorithms.EodAlgorithmInit;
 import stsc.common.algorithms.StockAlgorithmInit;
 
+/**
+ * This is an implementation for collection of {@link AlgorithmSetting} for
+ * typed elements. Supported / expected types are: <br/>
+ * 1. integer; <br/>
+ * 2. double; <br/>
+ * 3. string; <br/>
+ * 4. sub-execution (string like but store order). <br/>
+ * Also implements writeExternal / read (external).
+ */
 public final class AlgorithmSettingsImpl implements AlgorithmSettings {
 
 	private final FromToPeriod period;
@@ -40,7 +49,7 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings {
 		this.subExecutions = new ArrayList<>();
 	}
 
-	public void writeExternal(ObjectOutput out) throws IOException {
+	public void writeExternal(final ObjectOutput out) throws IOException {
 		period.writeExternal(out);
 		out.writeInt(integers.size());
 		for (Map.Entry<String, Integer> i : integers.entrySet()) {
@@ -96,8 +105,8 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings {
 		return new AlgorithmSettingsImpl(period, integers, doubles, strings, subExecutions);
 	}
 
-	private AlgorithmSettingsImpl(FromToPeriod p, HashMap<String, Integer> integers, HashMap<String, Double> doubles,
-			HashMap<String, String> strings, ArrayList<String> executions) {
+	private AlgorithmSettingsImpl(final FromToPeriod p, final HashMap<String, Integer> integers, final HashMap<String, Double> doubles,
+			final HashMap<String, String> strings, final ArrayList<String> executions) {
 		this.period = p;
 		this.integers = new HashMap<String, Integer>(integers);
 		this.doubles = new HashMap<String, Double>(doubles);

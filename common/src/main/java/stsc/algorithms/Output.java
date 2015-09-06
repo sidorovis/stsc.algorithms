@@ -16,15 +16,22 @@ import stsc.signals.IntegerSignal;
 import stsc.signals.SideSignal;
 import stsc.signals.series.CommonSignalsSerie;
 
-public class Output extends StockAlgorithm {
+/**
+ * Output algorithm is an adaptor algorithm that could be used for graphical
+ * representation of another algorithms result. <br/>
+ * Could adapt: <br/>
+ * 1. {@link DoubleSignal} (to {@link DoubleSignal}); <br/>
+ * 2. {@link SideSignal} (to {@link DoubleSignal}
+ */
+public final class Output extends StockAlgorithm {
 
-	final String fromExecution;
+	private final String fromExecution;
 
-	public Output(StockAlgorithmInit initialize) throws BadAlgorithmException {
+	public Output(final StockAlgorithmInit initialize) throws BadAlgorithmException {
 		super(initialize);
-		List<String> subExecutions = initialize.getSettings().getSubExecutions();
+		final List<String> subExecutions = initialize.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1)
-			throw new BadAlgorithmException("out algorithm should have at least one sub-execution");
+			throw new BadAlgorithmException(Output.class.getSimpleName() + " algorithm should have at least one sub-execution");
 		this.fromExecution = subExecutions.get(0);
 	}
 
@@ -34,8 +41,8 @@ public class Output extends StockAlgorithm {
 	}
 
 	@Override
-	public void process(Day day) throws BadSignalException {
-		SignalContainer<? extends SerieSignal> signalHandler = getSignal(fromExecution, day.getDate());
+	public void process(final Day day) throws BadSignalException {
+		final SignalContainer<? extends SerieSignal> signalHandler = getSignal(fromExecution, day.getDate());
 		if (signalHandler == null)
 			return;
 		final Optional<? extends SerieSignal> signal = signalHandler.getValue();
@@ -48,7 +55,7 @@ public class Output extends StockAlgorithm {
 			final DoubleSignal result = new DoubleSignal(sideSignal.getValue() * sideSignal.getSide().value());
 			addSignal(day.getDate(), result);
 		} else if (signal.get() instanceof IntegerSignal) {
-			addSignal(day.getDate(), new DoubleSignal(((IntegerSignal) signal.get()).value));
+			addSignal(day.getDate(), new DoubleSignal(((IntegerSignal) signal.get()).getValue()));
 		}
 	}
 }

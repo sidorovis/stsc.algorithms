@@ -4,7 +4,7 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.algorithms</artifactId>
-	<version>0.0.18-WEBINTERFACE</version>
+	<version>0.0.19-BOM</version>
 	<packaging>pom</packaging>
 
 	<name>stsc.algorithms</name>

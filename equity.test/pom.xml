@@ -4,16 +4,34 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.algorithms.equity.test</artifactId>
-	<version>0.0.18-WEBINTERFACE</version>
+	<version>0.0.19-BOM</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.algorithms.equity.test</name>
 	<url>https://github.com/sidorovis/stsc</url>
 
 	<properties>
-		<project.build.sourceEncoding>Cp1251</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>stsc-bom-repository</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.bom/</url>
+		</repository>
+		<repository>
+			<id>stsc-common-mvn-repo</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.common/</url>
+		</repository>
+		<repository>
+			<id>stsc-signals-mvn-repo</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.signals/</url>
+		</repository>
+		<repository>
+			<id>stsc-algorithms-common-mvn-repo</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.algorithms.common/</url>
+		</repository>
+	</repositories>
 
 	<distributionManagement>
 		<repository>
@@ -23,16 +41,17 @@
 		</repository>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>stsc-common-mvn-repo</id>
-			<url>https://raw.github.com/sidorovis/stsc/stsc.common/</url>
-		</repository>
-		<repository>
-			<id>stsc-signals-mvn-repo</id>
-			<url>https://raw.github.com/sidorovis/stsc/stsc.signals/</url>
-		</repository>
-	</repositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>stsc</groupId>
+				<artifactId>stsc.bom</artifactId>
+				<version>0.0.19-BOM</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<defaultGoal>compile</defaultGoal>
@@ -89,29 +108,23 @@
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.algorithms.common</artifactId>
-			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
 			<artifactId>ejml</artifactId>
-			<version>0.25</version>
 		</dependency>
 	</dependencies>
 	<description>Stsc algorithms equity test - this algorithms using equity charts help to test other existing algorithms (from stsc.algorithms.common and etc).</description>

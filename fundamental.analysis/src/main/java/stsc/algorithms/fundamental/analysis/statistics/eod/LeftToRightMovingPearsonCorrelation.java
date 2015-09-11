@@ -39,10 +39,12 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 		final String leftElementsString = init.getSettings().getStringSetting("LE", "").getValue();
 		final String rightElementsString = init.getSettings().getStringSetting("RE", "").getValue();
 		for (String e : leftElementsString.split("\\|")) {
-			leftElements.add(e.trim());
+			if (!e.trim().isEmpty())
+				leftElements.add(e.trim());
 		}
 		for (String e : rightElementsString.split("\\|")) {
-			rightElements.add(e.trim());
+			if (!e.trim().isEmpty())
+				rightElements.add(e.trim());
 		}
 	}
 
@@ -61,11 +63,11 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 		final MapKeyPairToDoubleSignal.Builder builder = MapKeyPairToDoubleSignal.builder();
 		for (String l : leftElements) {
 			if (!datafeedKeys.contains(l)) {
-				break;
+				continue;
 			}
 			for (String r : rightElements) {
 				if (!datafeedKeys.contains(r)) {
-					break;
+					continue;
 				}
 				final OnStockData left = onStock.get(l);
 				final OnStockData right = onStock.get(r);

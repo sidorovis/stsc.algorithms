@@ -89,8 +89,9 @@
 					<message>#3 Deployment of new stsc.algorithms.index.based library
 						${project.version}</message>
 					<noJekyll>true</noJekyll>
+					<merge>true</merge>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-					<branch>refs/heads/stsc.algorithms.fundamental.analysis</branch>
+					<branch>refs/heads/stsc.repository</branch>
 					<includes>
 						<include>**/*</include>
 					</includes>

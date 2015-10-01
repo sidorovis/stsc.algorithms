@@ -36,6 +36,7 @@
 		<module>common</module>
 		<module>equity.test</module>
 		<module>fundamental.analysis</module>
+		<module>strategies_e1</module>
 	</modules>
 	<description>Stsc algorithms - all trading related algoritms (on stock and end of day algorithms).</description>
 </project>

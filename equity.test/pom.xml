@@ -88,8 +88,9 @@
 				<configuration>
 					<message>#2 Maven artifacts for ${project.version}</message>
 					<noJekyll>true</noJekyll>
+					<merge>true</merge>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-					<branch>refs/heads/stsc.algorithms.equity.test</branch>
+					<branch>refs/heads/stsc.repository</branch>
 					<includes>
 						<include>**/*</include>
 					</includes>

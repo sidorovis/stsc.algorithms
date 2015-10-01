@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>stsc</groupId>
-	<artifactId>stsc.algorithms.common</artifactId>
+	<artifactId>stsc.algorithms.strategies_e1</artifactId>
 	<version>0.0.19-BOM</version>
 	<packaging>jar</packaging>
 
-	<name>stsc.algorithms.common</name>
+	<name>stsc.algorithms.strategies_e1</name>
 	<url>https://github.com/sidorovis/stsc</url>
 
 	<properties>
@@ -30,6 +30,14 @@
 		<repository>
 			<id>stsc-signals-mvn-repo</id>
 			<url>https://raw.github.com/sidorovis/stsc/stsc.signals/</url>
+		</repository>
+		<repository>
+			<id>stsc-algorithms-common-mvn-repo</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.algorithms.common/</url>
+		</repository>
+		<repository>
+			<id>stsc-algorithms-fundamental-analysis-mvn-repo</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.algorithms.fundamental.analysis/</url>
 		</repository>
 	</repositories>
 
@@ -80,9 +88,10 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.11</version>
+				<version>0.12</version>
 				<configuration>
-					<message>#2 Maven artifacts for ${project.version}</message>
+					<message>#3 Deployment of new stsc.algorithms.index.based library
+						${project.version}</message>
 					<noJekyll>true</noJekyll>
 					<merge>true</merge>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
@@ -108,33 +117,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>stsc</groupId>
-			<artifactId>stsc.common</artifactId>
+			<artifactId>stsc.algorithms.fundamental.analysis</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
-			<artifactId>stsc.signals</artifactId>
+			<artifactId>stsc.algorithms.common</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
-			<artifactId>ejml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
 	</dependencies>
-	<description>Stsc algorithms common is a bunch common (base indexes/factors and etc. algorithms).</description>
+	<description>Stsc algorithms strategies episode 1 is first attempt to create fully/half - ready trading strategies.</description>
 </project>

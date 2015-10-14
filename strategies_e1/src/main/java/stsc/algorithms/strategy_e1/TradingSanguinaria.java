@@ -29,13 +29,11 @@ public final class TradingSanguinaria extends EodAlgorithm {
 
 	public TradingSanguinaria(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final EodAlgorithmInit init) throws BadAlgorithmException {
-		// TODO Auto-generated method stub
-		return null;
+		return Optional.empty();
 	}
 
 	@Override

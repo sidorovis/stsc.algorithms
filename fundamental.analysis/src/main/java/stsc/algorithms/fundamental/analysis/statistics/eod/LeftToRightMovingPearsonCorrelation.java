@@ -17,6 +17,7 @@ import stsc.common.algorithms.EodAlgorithmInit;
 import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
 import stsc.signals.MapKeyPairToDoubleSignal;
+import stsc.signals.MapKeyPairToDoubleSignal.Builder;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
@@ -32,12 +33,14 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 	private final ArrayList<String> rightElements = new ArrayList<>();
 
 	private final Map<String, OnStockData> onStock = new HashMap<>();
+	private final boolean allFromRightSide;
 
 	public LeftToRightMovingPearsonCorrelation(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.correlationLength = init.getSettings().getIntegerSetting("N", 22).getValue().intValue();
 		final String leftElementsString = init.getSettings().getStringSetting("LE", "").getValue();
 		final String rightElementsString = init.getSettings().getStringSetting("RE", "").getValue();
+		this.allFromRightSide = init.getSettings().getStringSetting("ALLR", "false").getValue().equals("true");
 		for (String e : leftElementsString.split("\\|")) {
 			if (!e.trim().isEmpty())
 				leftElements.add(e.trim());
@@ -65,17 +68,27 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 			if (!datafeedKeys.contains(l)) {
 				continue;
 			}
-			for (String r : rightElements) {
-				if (!datafeedKeys.contains(r)) {
-					continue;
+			if (allFromRightSide) {
+				for (String r : datafeedKeys) {
+					calculateCorrelation(l, r, date, builder);
 				}
-				final OnStockData left = onStock.get(l);
-				final OnStockData right = onStock.get(r);
-				final double correlationValue = calculateCorrelationFor(date, left, right);
-				builder.addValue(l, r, correlationValue);
+			} else {
+				for (String r : rightElements) {
+					if (!datafeedKeys.contains(r)) {
+						continue;
+					}
+					calculateCorrelation(l, r, date, builder);
+				}
 			}
 		}
 		addSignal(date, builder.build());
+	}
+
+	private void calculateCorrelation(String l, String r, Date date, Builder builder) {
+		final OnStockData left = onStock.get(l);
+		final OnStockData right = onStock.get(r);
+		final double correlationValue = calculateCorrelationFor(date, left, right);
+		builder.addValue(l, r, correlationValue);
 	}
 
 	private double calculateCorrelationFor(final Date date, OnStockData left, OnStockData right) {

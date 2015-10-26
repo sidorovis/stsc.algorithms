@@ -14,7 +14,7 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.SideSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class Level extends StockAlgorithm {
+public final class Level extends StockAlgorithm {
 
 	final double level;
 	final String factorName;

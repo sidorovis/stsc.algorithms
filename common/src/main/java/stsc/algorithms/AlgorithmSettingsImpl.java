@@ -1,8 +1,5 @@
 package stsc.algorithms;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,18 +11,18 @@ import stsc.common.FromToPeriod;
 import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.AlgorithmSettings;
 import stsc.common.algorithms.EodAlgorithmInit;
+import stsc.common.algorithms.MutatingAlgorithmSettings;
 import stsc.common.algorithms.StockAlgorithmInit;
 
 /**
- * This is an implementation for collection of {@link AlgorithmSetting} for
- * typed elements. Supported / expected types are: <br/>
+ * This is an implementation for collection of {@link AlgorithmSetting} for typed elements. Supported / expected types are: <br/>
  * 1. integer; <br/>
  * 2. double; <br/>
  * 3. string; <br/>
  * 4. sub-execution (string like but store order). <br/>
  * Also implements writeExternal / read (external).
  */
-public final class AlgorithmSettingsImpl implements AlgorithmSettings {
+public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingAlgorithmSettings {
 
 	private final FromToPeriod period;
 	private final HashMap<String, Integer> integers;
@@ -49,71 +46,6 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings {
 		this.subExecutions = new ArrayList<>();
 	}
 
-	public void writeExternal(final ObjectOutput out) throws IOException {
-		period.writeExternal(out);
-		out.writeInt(integers.size());
-		for (Map.Entry<String, Integer> i : integers.entrySet()) {
-			out.writeUTF(i.getKey());
-			out.writeInt(i.getValue());
-		}
-		out.writeInt(doubles.size());
-		for (Map.Entry<String, Double> i : doubles.entrySet()) {
-			out.writeUTF(i.getKey());
-			out.writeDouble(i.getValue());
-		}
-		out.writeInt(strings.size());
-		for (Map.Entry<String, String> i : strings.entrySet()) {
-			out.writeUTF(i.getKey());
-			out.writeUTF(i.getValue());
-		}
-		out.writeInt(subExecutions.size());
-		for (String i : subExecutions) {
-			out.writeUTF(i);
-		}
-	}
-
-	public static AlgorithmSettings read(final ObjectInput in) throws IOException {
-		final FromToPeriod period = FromToPeriod.read(in);
-
-		final int integersSize = in.readInt();
-		final HashMap<String, Integer> integers = new HashMap<>();
-		for (int i = 0; i < integersSize; ++i) {
-			final String key = in.readUTF();
-			final Integer value = in.readInt();
-			integers.put(key, value);
-		}
-		final int doublesSize = in.readInt();
-		final HashMap<String, Double> doubles = new HashMap<>();
-		for (int i = 0; i < doublesSize; ++i) {
-			final String key = in.readUTF();
-			final Double value = in.readDouble();
-			doubles.put(key, value);
-		}
-		final int stringsSize = in.readInt();
-		final HashMap<String, String> strings = new HashMap<>();
-		for (int i = 0; i < stringsSize; ++i) {
-			final String key = in.readUTF();
-			final String value = in.readUTF();
-			strings.put(key, value);
-		}
-		final int subExecutionsSize = in.readInt();
-		final ArrayList<String> subExecutions = new ArrayList<>();
-		for (int i = 0; i < subExecutionsSize; ++i) {
-			final String name = in.readUTF();
-			subExecutions.add(name);
-		}
-		return new AlgorithmSettingsImpl(period, integers, doubles, strings, subExecutions);
-	}
-
-	private AlgorithmSettingsImpl(final FromToPeriod p, final HashMap<String, Integer> integers, final HashMap<String, Double> doubles,
-			final HashMap<String, String> strings, final ArrayList<String> executions) {
-		this.period = p;
-		this.integers = new HashMap<String, Integer>(integers);
-		this.doubles = new HashMap<String, Double>(doubles);
-		this.strings = new HashMap<String, String>(strings);
-		this.subExecutions = new ArrayList<String>(executions);
-	}
-
 	private AlgorithmSettingsImpl(final AlgorithmSettingsImpl cloneFrom) {
 		this.period = cloneFrom.period;
 		this.integers = new HashMap<String, Integer>(cloneFrom.integers);
@@ -122,17 +54,17 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings {
 		this.subExecutions = new ArrayList<String>(cloneFrom.subExecutions);
 	}
 
-	public AlgorithmSettings setString(final String key, final String value) {
+	public AlgorithmSettingsImpl setString(final String key, final String value) {
 		strings.put(key, value);
 		return this;
 	}
 
-	public AlgorithmSettings setInteger(final String key, final Integer value) {
+	public AlgorithmSettingsImpl setInteger(final String key, final Integer value) {
 		integers.put(key, value);
 		return this;
 	}
 
-	public AlgorithmSettings setDouble(final String key, final Double value) {
+	public AlgorithmSettingsImpl setDouble(final String key, final Double value) {
 		doubles.put(key, value);
 		return this;
 	}

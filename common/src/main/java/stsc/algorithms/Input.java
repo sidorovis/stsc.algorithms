@@ -13,9 +13,7 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * Input on Stock Algorithm - returns series of data from {@link Day}. With 'e'
- * parameter, you can return OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day}
- * class.
+ * Input on Stock Algorithm - returns series of data from {@link Day}. With 'e' parameter, you can return OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day} class.
  */
 public final class Input extends StockAlgorithm {
 
@@ -24,8 +22,6 @@ public final class Input extends StockAlgorithm {
 	};
 
 	private static DayField fromString(String dayField) {
-		if (dayField == null)
-			return DayField.OPEN;
 		switch (dayField) {
 		case "open":
 			return DayField.OPEN;
@@ -46,7 +42,7 @@ public final class Input extends StockAlgorithm {
 
 	public Input(StockAlgorithmInit initialize) throws BadAlgorithmException {
 		super(initialize);
-		dayField = fromString(initialize.getSettings().getString("e"));
+		dayField = fromString(initialize.getSettings().getStringSetting("e", "open").getValue());
 	}
 
 	private DoubleSignal getData(final Day day) {

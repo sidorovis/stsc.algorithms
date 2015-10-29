@@ -24,7 +24,7 @@ public class AtrAtr extends StockAlgorithm {
 
 	public AtrAtr(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		N = init.getSettings().getIntegerSetting("N", 14).getValue();
+		N = init.getSettings().getIntegerSetting("N", 14);
 
 		atrTrName = init.getExecutionName() + "_AtrTr";
 		this.atrTr = new AtrTrueRange(init.createInit(atrTrName));
@@ -32,7 +32,7 @@ public class AtrAtr extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

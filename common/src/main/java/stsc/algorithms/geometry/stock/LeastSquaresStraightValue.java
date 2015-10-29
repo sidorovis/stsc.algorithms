@@ -33,7 +33,7 @@ public class LeastSquaresStraightValue extends StockAlgorithm {
 
 	public LeastSquaresStraightValue(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.N = init.getSettings().getIntegerSetting("N", 5).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 5);
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(LeastSquaresStraightValue.class + " algorithm require at least one sub algorithms.");
 		}
@@ -42,7 +42,7 @@ public class LeastSquaresStraightValue extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(ListOfDoubleSignal.class, size));
 		// y = a0 + a1 * x
 		// double get by index 0 -> a0

@@ -24,7 +24,7 @@ public class Momentum extends StockAlgorithm {
 
 	public Momentum(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.N = init.getSettings().getIntegerSetting("N", 5).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 5);
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(Momentum.class + " on stock algorithm should have at least one sub execution");
 		}
@@ -33,7 +33,7 @@ public class Momentum extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

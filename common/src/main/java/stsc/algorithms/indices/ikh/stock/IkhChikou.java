@@ -20,12 +20,12 @@ public class IkhChikou extends StockAlgorithm {
 
 	public IkhChikou(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		tm = init.getSettings().getIntegerSetting("TM", 26).getValue();
+		tm = init.getSettings().getIntegerSetting("TM", 26);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

@@ -29,7 +29,7 @@ public class SeveralLastMin extends StockAlgorithm {
 
 	public SeveralLastMin(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.N = init.getSettings().getIntegerSetting("N", 9).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 9);
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(SeveralLastMin.class + " algorithm require at least one sub algorithms.");
 		}
@@ -38,7 +38,7 @@ public class SeveralLastMin extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

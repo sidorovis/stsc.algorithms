@@ -16,17 +16,14 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * This algorithm is helper for Visualizing some of algorithms results. For
- * example {@link FibonacciRetracementBearStdDev} algorithms can provide signal
- * {@link Double#MAX_VALUE} which is really much bigger then expected to
- * visualize. <br/>
+ * This algorithm is helper for Visualizing some of algorithms results. For example {@link FibonacciRetracementBearStdDev} algorithms can provide signal
+ * {@link Double#MAX_VALUE} which is really much bigger then expected to visualize. <br/>
  * So you can use this algorithm to set up maximum (up and bottom borders). <br/>
  * For example: you can use it with next parameters:<br/>
  * a1. UP = 100d, DOWN = -100d;<br/>
  * a2. ALL = 100d (will setup 'up to 100d' and 'down to -100d').<br/>
- * You can use UP, DOWN and ALL together but result will be unpredictable. By
- * default UP = {@link Double#MAX_VALUE}, DOWN = -{@link Double#MAX_VALUE}, ALL
- * = {@link Double#MAX_VALUE}.
+ * You can use UP, DOWN and ALL together but result will be unpredictable. By default UP = {@link Double#MAX_VALUE}, DOWN = -{@link Double#MAX_VALUE}, ALL =
+ * {@link Double#MAX_VALUE}.
  */
 public final class AlgorithmsLimiter extends StockAlgorithm {
 
@@ -41,9 +38,9 @@ public final class AlgorithmsLimiter extends StockAlgorithm {
 		if (subExecutionNames.size() < 1)
 			throw new BadAlgorithmException(AlgorithmsLimiter.class.toString() + " require one sub parameter");
 		subAlgoName = subExecutionNames.get(0);
-		up = init.getSettings().getDoubleSetting("UP", Double.MAX_VALUE).getValue();
-		down = init.getSettings().getDoubleSetting("DOWN", -Double.MAX_VALUE).getValue();
-		all = init.getSettings().getDoubleSetting("ALL", Double.MAX_VALUE).getValue();
+		up = init.getSettings().getDoubleSetting("UP", Double.MAX_VALUE);
+		down = init.getSettings().getDoubleSetting("DOWN", -Double.MAX_VALUE);
+		all = init.getSettings().getDoubleSetting("ALL", Double.MAX_VALUE);
 		if (up <= down)
 			throw new BadAlgorithmException("up parameter should be > then down parameter");
 		if (all <= 0.0)
@@ -52,7 +49,7 @@ public final class AlgorithmsLimiter extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

@@ -22,15 +22,15 @@ public class TrianglePattern extends GeometryTriangleStockAlgorithmBase {
 	public TrianglePattern(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 
-		this.acceptableShortTrendCoefficient = init.getSettings().getDoubleSetting("STC", -0.05).getValue();
-		this.acceptableLongTrendCoefficient = init.getSettings().getDoubleSetting("LTC", 0.05).getValue();
+		this.acceptableShortTrendCoefficient = init.getSettings().getDoubleSetting("STC", -0.05);
+		this.acceptableLongTrendCoefficient = init.getSettings().getDoubleSetting("LTC", 0.05);
 
-		this.acceptableLineCoef = init.getSettings().getDoubleSetting("SLC", 0.03).getValue();
+		this.acceptableLineCoef = init.getSettings().getDoubleSetting("SLC", 0.03);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(ListOfDoubleSignal.class, size));
 	}
 

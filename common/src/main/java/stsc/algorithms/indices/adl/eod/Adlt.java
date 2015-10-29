@@ -26,7 +26,7 @@ public class Adlt extends EodAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(EodAlgorithmInit init) throws BadAlgorithmException {
-		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = init.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

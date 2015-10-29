@@ -19,23 +19,16 @@ import stsc.signals.MapKeyPairToDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * {@link AllToAllMovingPearsonCorrelation} end of day algorithm that calculate
- * moving correlation coefficient for all possible pairs using Pearson model.
- * <br/>
+ * {@link AllToAllMovingPearsonCorrelation} end of day algorithm that calculate moving correlation coefficient for all possible pairs using Pearson model. <br/>
  * <hr/>
  * <b>Parameters: </b><br/>
- * 1. N - length of correlation (amount of elements that will be used to
- * calculate correlation); <br/>
+ * 1. N - length of correlation (amount of elements that will be used to calculate correlation); <br/>
  * <hr/>
  * <b>Algorithm:</b><br/>
- * For each day algorithm returns {@link MapKeyPairToDoubleSignal} signal. This
- * signal contains map of key-pair (string-string (for example 'spy'-'aapl')) to
- * double value (moving pearson correlation coefficient between 'spy' and
- * 'aapl'). Correlation coefficient calculation algorithm is:
- * https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient.
- * Small addition that encapsulate abstract mathematical algorithm from real
- * life data (missed elements and etc.) if amount of elements (because of some
- * data gaps or whatever) is less then N / 2.0 then correlation is zero.
+ * For each day algorithm returns {@link MapKeyPairToDoubleSignal} signal. This signal contains map of key-pair (string-string (for example 'spy'-'aapl')) to
+ * double value (moving pearson correlation coefficient between 'spy' and 'aapl'). Correlation coefficient calculation algorithm is:
+ * https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient. Small addition that encapsulate abstract mathematical algorithm from real life
+ * data (missed elements and etc.) if amount of elements (because of some data gaps or whatever) is less then N / 2.0 then correlation is zero.
  */
 public final class AllToAllMovingPearsonCorrelation extends EodAlgorithm implements MovingPearsonCorrelation {
 
@@ -45,12 +38,12 @@ public final class AllToAllMovingPearsonCorrelation extends EodAlgorithm impleme
 
 	public AllToAllMovingPearsonCorrelation(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.correlationLength = init.getSettings().getIntegerSetting("N", 22).getValue().intValue();
+		this.correlationLength = init.getSettings().getIntegerSetting("N", 22);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final EodAlgorithmInit init) throws BadAlgorithmException {
-		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = init.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(MapKeyPairToDoubleSignal.class, size));
 	}
 

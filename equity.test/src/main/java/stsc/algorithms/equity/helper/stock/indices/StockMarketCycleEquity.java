@@ -19,20 +19,15 @@ import stsc.signals.DoubleSignal;
 
 /**
  * {@link EodAlgorithm} that has 5(+1 sub-execution) parameters: <br/>
- * 1. {@link #positionSharesSize} - position shares size of position (amount of
- * shares). Each signal algorithm will buy / sell this amount of shares. <br/>
- * 2. When sub-execution add {@link DoubleSignal} bigger then
- * {@link #openLongBorder} (and we don't have any opened position for this
- * stock), we send BUY {@link Side#LONG} signal. <br/>
- * 3. When sub-execution add {@link DoubleSignal} smaller then
- * {@link #openShortBorder} (and we don't have any opened position for this
- * stock), we send BUY {@link Side#SHORT} signal. <br/>
- * 4. When sub-execution add {@link DoubleSignal} smaller then
- * {@link #closeLongBorder} (and we have opened {@link Side#LONG} position), we
- * send SELL {@link Side#LONG} signal.<br/>
- * 5. When sub-execution add {@link DoubleSignal} bigger then
- * {@link #closeShortBorder} (and we have opened {@link Side#SHORT} position),
- * we send SELL {@link Side#SHORT} signal.
+ * 1. {@link #positionSharesSize} - position shares size of position (amount of shares). Each signal algorithm will buy / sell this amount of shares. <br/>
+ * 2. When sub-execution add {@link DoubleSignal} bigger then {@link #openLongBorder} (and we don't have any opened position for this stock), we send BUY
+ * {@link Side#LONG} signal. <br/>
+ * 3. When sub-execution add {@link DoubleSignal} smaller then {@link #openShortBorder} (and we don't have any opened position for this stock), we send BUY
+ * {@link Side#SHORT} signal. <br/>
+ * 4. When sub-execution add {@link DoubleSignal} smaller then {@link #closeLongBorder} (and we have opened {@link Side#LONG} position), we send SELL
+ * {@link Side#LONG} signal.<br/>
+ * 5. When sub-execution add {@link DoubleSignal} bigger then {@link #closeShortBorder} (and we have opened {@link Side#SHORT} position), we send SELL
+ * {@link Side#SHORT} signal.
  */
 public final class StockMarketCycleEquity extends EodAlgorithm {
 
@@ -54,11 +49,11 @@ public final class StockMarketCycleEquity extends EodAlgorithm {
 			throw new BadAlgorithmException(StockMarketCycleEquity.class.toString() + " require at least one sub execution parameter");
 		}
 		subExecution = subExecutions.get(0);
-		positionSharesSize = init.getSettings().getIntegerSetting("PSS", 100).getValue();
-		openLongBorder = init.getSettings().getDoubleSetting("OLB", 60.0).getValue();
-		openShortBorder = init.getSettings().getDoubleSetting("OSB", -60.0).getValue();
-		closeLongBorder = init.getSettings().getDoubleSetting("CLB", 40.0).getValue();
-		closeShortBorder = init.getSettings().getDoubleSetting("CSB", -40.0).getValue();
+		positionSharesSize = init.getSettings().getIntegerSetting("PSS", 100);
+		openLongBorder = init.getSettings().getDoubleSetting("OLB", 60.0);
+		openShortBorder = init.getSettings().getDoubleSetting("OSB", -60.0);
+		closeLongBorder = init.getSettings().getDoubleSetting("CLB", 40.0);
+		closeShortBorder = init.getSettings().getDoubleSetting("CSB", -40.0);
 	}
 
 	@Override

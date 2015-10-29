@@ -2,15 +2,15 @@ package stsc.algorithms.indices.macd.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -28,8 +28,8 @@ public class MacdMacd extends StockAlgorithm {
 	public MacdMacd(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 
-		this.s = init.getSettings().getIntegerSetting("S", 12).getValue();
-		this.l = init.getSettings().getIntegerSetting("L", 26).getValue();
+		this.s = init.getSettings().getIntegerSetting("S", 12);
+		this.l = init.getSettings().getIntegerSetting("L", 26);
 
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(MacdMacd.class + " should have at least one sub on stock algorithm");
@@ -43,7 +43,7 @@ public class MacdMacd extends StockAlgorithm {
 	}
 
 	private Ema createEma(String name, StockAlgorithmInit init, int length) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setDouble("P", 2.0 / (1.0 + length));
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		return new Ema(init.createInit(name, settings));
@@ -51,7 +51,7 @@ public class MacdMacd extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

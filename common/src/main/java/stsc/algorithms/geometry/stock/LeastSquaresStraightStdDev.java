@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -30,14 +30,14 @@ public class LeastSquaresStraightStdDev extends StockAlgorithm {
 
 	public LeastSquaresStraightStdDev(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.N = init.getSettings().getIntegerSetting("N", 5).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 5);
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(LeastSquaresStraightStdDev.class + " algorithm require at least one sub algorithms.");
 		}
 		this.subExecutionName = init.getSettings().getSubExecutions().get(0);
 
 		this.lssName = init.getExecutionName() + "_Lss";
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", N);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		StockAlgorithmInit lssInit = init.createInit(lssName, settings);
@@ -54,7 +54,7 @@ public class LeastSquaresStraightStdDev extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

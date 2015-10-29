@@ -20,14 +20,14 @@ public class Tma extends StockAlgorithm {
 
 	public Tma(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.P = init.getSettings().getDoubleSetting("P", 0.2).getValue();
+		this.P = init.getSettings().getDoubleSetting("P", 0.2);
 		this.dmaName = init.getExecutionName() + "_Dma";
 		this.dma = new Dma(init.createInit(dmaName));
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class, size));
 	}
 

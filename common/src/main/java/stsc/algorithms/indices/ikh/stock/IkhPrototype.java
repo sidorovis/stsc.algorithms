@@ -36,13 +36,13 @@ public class IkhPrototype extends StockAlgorithm {
 
 	public IkhPrototype(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.ts = init.getSettings().getIntegerSetting("TS", 9).getValue();
-		this.tm = init.getSettings().getIntegerSetting("TM", 26).getValue();
+		this.ts = init.getSettings().getIntegerSetting("TS", 9);
+		this.tm = init.getSettings().getIntegerSetting("TM", 26);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

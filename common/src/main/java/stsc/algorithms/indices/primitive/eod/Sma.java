@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import stsc.common.BadSignalException;
 import stsc.common.Day;
-import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.EodAlgorithmInit;
@@ -18,15 +17,13 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * Simple Moving Average algorithm. Works on serie of Double and output serie of
- * Double. This is end of day algorithm to process EOD output sub-executions.
- * TODO think how to unite with
- * {@link stsc.algorithms.indices.primitive.stock.Sma}.
+ * Simple Moving Average algorithm. Works on serie of Double and output serie of Double. This is end of day algorithm to process EOD output sub-executions. TODO
+ * think how to unite with {@link stsc.algorithms.indices.primitive.stock.Sma}.
  */
 public final class Sma extends EodAlgorithm {
 
 	private final String subAlgoName;
-	private final AlgorithmSetting<Integer> N;
+	private final Integer N;
 
 	private final LinkedList<Double> elements = new LinkedList<>();
 	private Double sum = Double.valueOf(0.0);
@@ -42,7 +39,7 @@ public final class Sma extends EodAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(EodAlgorithmInit init) throws BadAlgorithmException {
-		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = init.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 
@@ -51,12 +48,12 @@ public final class Sma extends EodAlgorithm {
 		final double price = getSignal(subAlgoName, date).getContent(DoubleSignal.class).getValue();
 		elements.push(price);
 		sum += price;
-		if (elements.size() <= N.getValue()) {
+		if (elements.size() <= N) {
 			addSignal(date, new DoubleSignal(sum / elements.size()));
-		} else if (elements.size() > N.getValue()) {
+		} else {
 			Double lastElement = elements.pollLast();
 			sum -= lastElement;
-			addSignal(date, new DoubleSignal(sum / N.getValue()));
+			addSignal(date, new DoubleSignal(sum / N));
 		}
 	}
 

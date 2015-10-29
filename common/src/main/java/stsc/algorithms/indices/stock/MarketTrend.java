@@ -2,10 +2,10 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -23,17 +23,17 @@ public class MarketTrend extends StockAlgorithm {
 
 	public MarketTrend(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.stockName = init.getSettings().getStringSetting("SN", "spy").getValue();
+		this.stockName = init.getSettings().getStringSetting("SN", "spy");
 		stockWeExecuteAt = init.getStockName();
 		this.spyAlgoName = init.getExecutionName() + "_Spy";
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		final StockAlgorithmInit spyInit = new StockAlgorithmInit(spyAlgoName, init, stockName, settings);
 		spyAlgo = new StockMarketCycle(spyInit);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

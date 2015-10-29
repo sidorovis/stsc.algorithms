@@ -32,8 +32,8 @@ public class MinForNDays extends StockAlgorithm {
 
 	public MinForNDays(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.period = init.getSettings().getIntegerSetting("P", 5).getValue();
-		this.sleepagePeriod = init.getSettings().getIntegerSetting("SP", 5).getValue();
+		this.period = init.getSettings().getIntegerSetting("P", 5);
+		this.sleepagePeriod = init.getSettings().getIntegerSetting("SP", 5);
 
 		final List<String> subExecutions = init.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1) {
@@ -44,7 +44,7 @@ public class MinForNDays extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

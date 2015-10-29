@@ -8,7 +8,6 @@ import java.util.Optional;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Side;
-import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.EodAlgorithmInit;
@@ -16,17 +15,13 @@ import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
 
 /**
- * {@link OneSideOpenAlgorithm} is {@link EodAlgorithm} that can be used to test
- * hadoop multi-pc calculations / user interface Grid / Genetic searchers and
- * etc.
+ * {@link OneSideOpenAlgorithm} is {@link EodAlgorithm} that can be used to test hadoop multi-pc calculations / user interface Grid / Genetic searchers and etc.
  * <hr/>
  * Parameters: <br/>
- * 1. <b>side: string</b> (for example "long", if it is "long" than field side
- * will store {@link Side#LONG} otherwise it will store {@link Side#SHORT}.
+ * 1. <b>side: string</b> (for example "long", if it is "long" than field side will store {@link Side#LONG} otherwise it will store {@link Side#SHORT}.
  * <hr/>
  * Algorithm description:<br/>
- * Open (selected by input parameter side) position for all stocks into first
- * available (not empty) datafeed. All positions shares amount is 100.<br/>
+ * Open (selected by input parameter side) position for all stocks into first available (not empty) datafeed. All positions shares amount is 100.<br/>
  * After first open keep positions opened till end of testing period.
  * <hr/>
  */
@@ -37,8 +32,8 @@ public final class OneSideOpenAlgorithm extends EodAlgorithm {
 
 	public OneSideOpenAlgorithm(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		final AlgorithmSetting<String> sideValue = init.getSettings().getStringSetting("side", "long");
-		if (sideValue.getValue().compareTo("long") == 0) {
+		final String sideValue = init.getSettings().getStringSetting("side", "long");
+		if (sideValue.equals("long")) {
 			this.side = Side.LONG;
 		} else {
 			this.side = Side.SHORT;

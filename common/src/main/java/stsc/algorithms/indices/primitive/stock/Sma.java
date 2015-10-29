@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import stsc.common.BadSignalException;
 import stsc.common.Day;
-import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
@@ -18,7 +17,7 @@ import stsc.signals.series.LimitSignalsSerie;
 public final class Sma extends StockAlgorithm {
 
 	private final String subAlgoName;
-	private final AlgorithmSetting<Integer> N;
+	private final Integer N;
 
 	final LinkedList<Double> elements = new LinkedList<>();
 	Double sum = Double.valueOf(0.0);
@@ -34,7 +33,7 @@ public final class Sma extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class, size));
 	}
 
@@ -43,12 +42,12 @@ public final class Sma extends StockAlgorithm {
 		final double price = getSignal(subAlgoName, day.getDate()).getContent(DoubleSignal.class).getValue();
 		elements.push(price);
 		sum += price;
-		if (elements.size() <= N.getValue()) {
+		if (elements.size() <= N) {
 			addSignal(day.getDate(), new DoubleSignal(sum / elements.size()));
-		} else if (elements.size() > N.getValue()) {
+		} else {
 			Double lastElement = elements.pollLast();
 			sum -= lastElement;
-			addSignal(day.getDate(), new DoubleSignal(sum / N.getValue()));
+			addSignal(day.getDate(), new DoubleSignal(sum / N));
 		}
 	}
 }

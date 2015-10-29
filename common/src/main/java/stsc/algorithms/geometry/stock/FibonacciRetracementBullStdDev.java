@@ -23,7 +23,7 @@ public class FibonacciRetracementBullStdDev extends StockAlgorithm {
 	public FibonacciRetracementBullStdDev(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		List<String> subExecutionNames = init.getSettings().getSubExecutions();
-		N = init.getSettings().getIntegerSetting("N", 4).getValue();
+		N = init.getSettings().getIntegerSetting("N", 4);
 		if (subExecutionNames.size() < 1)
 			throw new BadAlgorithmException(FibonacciRetracementBullStdDev.class.toString() + " require one sub parameter");
 		subAlgoName = subExecutionNames.get(0);
@@ -31,7 +31,7 @@ public class FibonacciRetracementBullStdDev extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 5).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 5);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

@@ -2,14 +2,14 @@ package stsc.algorithms.indices.ikh.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -23,18 +23,18 @@ public class IkhSenkauA extends StockAlgorithm {
 
 	public IkhSenkauA(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		final int ts = init.getSettings().getIntegerSetting("TS", 9).getValue();
-		final int tm = init.getSettings().getIntegerSetting("TM", 26).getValue();
+		final int ts = init.getSettings().getIntegerSetting("TS", 9);
+		final int tm = init.getSettings().getIntegerSetting("TM", 26);
 		{
 			this.tenkanName = init.getExecutionName() + "_IhkTenkan";
-			final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+			final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 			settings.setInteger("TS", ts);
 			settings.setInteger("TM", tm);
 			this.tenkan = new IkhPrototype(init.createInit(tenkanName, settings));
 		}
 		{
 			this.kijunName = init.getExecutionName() + "_IhkKijun";
-			final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+			final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 			settings.setInteger("TS", tm);
 			settings.setInteger("TM", tm);
 			this.kijun = new IkhPrototype(init.createInit(kijunName, settings));
@@ -43,7 +43,7 @@ public class IkhSenkauA extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

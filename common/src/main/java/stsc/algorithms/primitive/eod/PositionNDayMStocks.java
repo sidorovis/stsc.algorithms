@@ -15,13 +15,12 @@ import stsc.algorithms.EodPosition;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Side;
-import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.EodAlgorithmInit;
+import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalContainer;
 import stsc.common.signals.SignalsSerie;
-import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 
 /**
@@ -29,9 +28,9 @@ import stsc.signals.DoubleSignal;
  */
 public final class PositionNDayMStocks extends EodAlgorithm {
 
-	private final AlgorithmSetting<Integer> n;
-	private final AlgorithmSetting<Integer> m;
-	private final AlgorithmSetting<Double> ps;
+	private final Integer n;
+	private final Integer m;
+	private final Double ps;
 	private final Side side;
 	private final String factorExecutionName;
 
@@ -65,7 +64,7 @@ public final class PositionNDayMStocks extends EodAlgorithm {
 		n = init.getSettings().getIntegerSetting("n", 22);
 		ps = init.getSettings().getDoubleSetting("ps", 100000.0);
 		m = init.getSettings().getIntegerSetting("m", 2);
-		side = (init.getSettings().getStringSetting("side", "long").getValue().equals("long") ? Side.LONG : Side.SHORT);
+		side = (init.getSettings().getStringSetting("side", "long").equals("long") ? Side.LONG : Side.SHORT);
 		final List<String> subExecutions = init.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1)
 			throw new BadAlgorithmException("CrossSignal algorithm should receive one stock based execution with Double");
@@ -77,7 +76,7 @@ public final class PositionNDayMStocks extends EodAlgorithm {
 		if (longPositions.isEmpty()) {
 			open(date, datafeed);
 		} else {
-			if (openDate != null && new LocalDate(openDate).plusDays(n.getValue()).isBefore(new LocalDate(date))) {
+			if (openDate != null && new LocalDate(openDate).plusDays(n).isBefore(new LocalDate(date))) {
 				reopen(date, datafeed);
 			}
 		}
@@ -117,20 +116,20 @@ public final class PositionNDayMStocks extends EodAlgorithm {
 	private void open(final Date date, final HashMap<String, Day> datafeed) {
 		final ArrayList<Factor> sortedStocks = getSortedStocks(date, datafeed);
 
-		if (sortedStocks.size() < m.getValue() * 2) {
+		if (sortedStocks.size() < m * 2) {
 			return;
 		}
 
-		for (int i = 0; i < m.getValue(); ++i) {
+		for (int i = 0; i < m; ++i) {
 			final String stockName = sortedStocks.get(i).stockName;
 			final double price = datafeed.get(stockName).getPrices().getOpen();
-			final int sharesAmount = (int) (ps.getValue() / price);
+			final int sharesAmount = (int) (ps / price);
 			addPositionToStorage(stockName, side, sharesAmount);
 		}
-		for (int i = sortedStocks.size() - m.getValue(); i < sortedStocks.size(); ++i) {
+		for (int i = sortedStocks.size() - m; i < sortedStocks.size(); ++i) {
 			final String stockName = sortedStocks.get(i).stockName;
 			final double price = datafeed.get(stockName).getPrices().getOpen();
-			final int sharesAmount = (int) (ps.getValue() / price);
+			final int sharesAmount = (int) (ps / price);
 			addPositionToStorage(stockName, side.reverse(), sharesAmount);
 		}
 		openDate = date;

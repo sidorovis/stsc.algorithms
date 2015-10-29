@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -38,13 +38,13 @@ public class StockMarketCycle extends StockAlgorithm {
 
 	public StockMarketCycle(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.smasDiv = init.getSettings().getDoubleSetting("smasDiv", 1.5).getValue();
-		this.divDiff = init.getSettings().getDoubleSetting("divDiff", 0.01).getValue();
-		this.divSmallDiff = init.getSettings().getDoubleSetting("divSmallDiff", 0.0).getValue();
-		this.smaSmallSize = init.getSettings().getIntegerSetting("smaSmallSize", 15).getValue();
+		this.smasDiv = init.getSettings().getDoubleSetting("smasDiv", 1.5);
+		this.divDiff = init.getSettings().getDoubleSetting("divDiff", 0.01);
+		this.divSmallDiff = init.getSettings().getDoubleSetting("divSmallDiff", 0.0);
+		this.smaSmallSize = init.getSettings().getIntegerSetting("smaSmallSize", 15);
 
 		this.inputName = init.getExecutionName() + "_Input";
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("size", 500);
 		this.input = new Input(init.createInit(inputName, settings));
 
@@ -67,7 +67,7 @@ public class StockMarketCycle extends StockAlgorithm {
 	}
 
 	private Sma createSmaAlgo(String name, int smaN, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", smaN);
 		settings.setInteger("size", smaN);
 		settings.addSubExecutionName(inputName);
@@ -76,7 +76,7 @@ public class StockMarketCycle extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

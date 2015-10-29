@@ -23,8 +23,7 @@ import stsc.stocks.indexes.GlobalMarketIndex;
 import stsc.stocks.indexes.RegionMarketIndex;
 
 /**
- * https://en.wikipedia.org/wiki/Sanguinaria is a flower that rise very early in
- * Spring, it like first flower. <br/>
+ * https://en.wikipedia.org/wiki/Sanguinaria is a flower that rise very early in Spring, it like first flower. <br/>
  * This algorithm is first attempt to create full trading algorithm.<br/>
  * <br/>
  * 
@@ -49,13 +48,13 @@ public final class TradingSanguinaria extends EodAlgorithm {
 		if (init.getSettings().getSubExecutions().size() < 1) {
 			throw new BadAlgorithmException(TradingSanguinaria.class.getName() + " algorithm should one sub execution - for correlation definition");
 		}
-		this.openLength = init.getSettings().getIntegerSetting("N", 11).getValue();
+		this.openLength = init.getSettings().getIntegerSetting("N", 11);
 		this.correlationName = init.getSettings().getSubExecutions().get(0);
-		this.globalMarketIndex = init.getSettings().getStringSetting("GM", "spy").getValue();
-		this.positiveCorrelation = init.getSettings().getDoubleSetting("PC", 0.92).getValue();
-		this.negativeCorrelation = init.getSettings().getDoubleSetting("NC", -0.92).getValue();
-		this.minimalStocksForSide = init.getSettings().getIntegerSetting("MS", 2).getValue();
-		this.moneyPerShare = init.getSettings().getDoubleSetting("M", 1000.0).getValue();
+		this.globalMarketIndex = init.getSettings().getStringSetting("GM", "spy");
+		this.positiveCorrelation = init.getSettings().getDoubleSetting("PC", 0.92);
+		this.negativeCorrelation = init.getSettings().getDoubleSetting("NC", -0.92);
+		this.minimalStocksForSide = init.getSettings().getIntegerSetting("MS", 2);
+		this.moneyPerShare = init.getSettings().getDoubleSetting("M", 1000.0);
 	}
 
 	@Override

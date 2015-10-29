@@ -21,7 +21,7 @@ public final class Level extends StockAlgorithm {
 
 	public Level(StockAlgorithmInit initialize) throws BadAlgorithmException {
 		super(initialize);
-		level = Math.abs(initialize.getSettings().getDoubleSetting("f", 0.0).getValue());
+		level = Math.abs(initialize.getSettings().getDoubleSetting("f", 0.0));
 		factorName = initialize.getSettings().getSubExecutions().get(0);
 	}
 

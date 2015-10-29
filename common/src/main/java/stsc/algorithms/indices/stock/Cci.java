@@ -2,16 +2,16 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.SmStDev;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -30,7 +30,7 @@ public class Cci extends StockAlgorithm {
 
 	public Cci(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.K = init.getSettings().getDoubleSetting("K", 1.0 / (0.015)).getValue();
+		this.K = init.getSettings().getDoubleSetting("K", 1.0 / (0.015));
 
 		this.typicalPriceName = init.getExecutionName() + "_TypicalPrice";
 		this.typicalPrice = new TypicalPrice(init.createInit(typicalPriceName));
@@ -43,15 +43,15 @@ public class Cci extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl smaSettings = new AlgorithmConfigurationImpl();
-		smaSettings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
+		final MutatingAlgorithmConfiguration smaSettings = init.createSubAlgorithmConfiguration();
+		smaSettings.setInteger("N", init.getSettings().getIntegerSetting("N", 5));
 		smaSettings.addSubExecutionName(typicalPriceName);
 		return new Sma(init.createInit(smaName, smaSettings));
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 5));
 		settings.addSubExecutionName(typicalPriceName);
 		settings.addSubExecutionName(smaName);
 		return new SmStDev(init.createInit(stDevName, settings));
@@ -59,7 +59,7 @@ public class Cci extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class, size));
 	}
 

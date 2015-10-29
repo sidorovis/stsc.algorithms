@@ -2,15 +2,15 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -45,36 +45,36 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createLnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setString("e", "low");
 		return new Input(init.createInit(lnInputName, settings));
 	}
 
 	private MinForNDays createLn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
-		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5));
+		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0));
 		settings.addSubExecutionName(lnInputName);
 		return new MinForNDays(init.createInit(lnName, settings));
 	}
 
 	private Input createHnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setString("e", "high");
 		return new Input(init.createInit(hnInputName, settings));
 	}
 
 	private MaxForNDays createHn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
-		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5));
+		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0));
 		settings.addSubExecutionName(hnInputName);
 		return new MaxForNDays(init.createInit(hnName, settings));
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

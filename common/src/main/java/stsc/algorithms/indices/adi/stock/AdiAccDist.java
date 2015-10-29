@@ -23,7 +23,7 @@ public class AdiAccDist extends StockAlgorithm {
 
 	public AdiAccDist(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.koefficient = init.getSettings().getDoubleSetting("K", 0.0001).getValue();
+		this.koefficient = init.getSettings().getDoubleSetting("K", 0.0001);
 
 		this.adiClvName = init.getExecutionName() + "_AdiClv";
 		this.adiClv = new AdiClv(init.createInit(adiClvName));
@@ -31,7 +31,7 @@ public class AdiAccDist extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

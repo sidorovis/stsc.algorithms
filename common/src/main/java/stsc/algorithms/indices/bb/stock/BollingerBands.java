@@ -2,25 +2,24 @@ package stsc.algorithms.indices.bb.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.SmStDev;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
-import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 public class BollingerBands extends StockAlgorithm {
 
-	private final AlgorithmSetting<Integer> N;
-	private final AlgorithmSetting<Double> K;
+	private final Integer N;
+	private final Double K;
 	private Integer size;
 
 	private final String smaName;
@@ -40,8 +39,8 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("N", N.getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("N", N);
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		final StockAlgorithmInit smaInit = new StockAlgorithmInit(smaName, init, settings);
@@ -49,8 +48,8 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("N", N.getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("N", N);
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		settings.addSubExecutionName(smaName);
@@ -60,7 +59,7 @@ public class BollingerBands extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<SerieSignal>(ListOfDoubleSignal.class, size));
 	}
 
@@ -71,8 +70,8 @@ public class BollingerBands extends StockAlgorithm {
 		final Double sma = getSignal(smaName, day.getDate()).getContent(DoubleSignal.class).getValue();
 		final Double stDev = getSignal(smStDevName, day.getDate()).getContent(DoubleSignal.class).getValue();
 		final ListOfDoubleSignal signal = new ListOfDoubleSignal();
-		signal.addDouble(sma - stDev * K.getValue());
-		signal.addDouble(sma + stDev * K.getValue());
+		signal.addDouble(sma - stDev * K);
+		signal.addDouble(sma + stDev * K);
 		addSignal(day.getDate(), signal);
 	}
 

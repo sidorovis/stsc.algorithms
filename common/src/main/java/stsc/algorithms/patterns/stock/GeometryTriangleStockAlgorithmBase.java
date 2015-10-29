@@ -8,11 +8,11 @@ import java.util.List;
 import org.ejml.factory.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.geometry.stock.LeastSquaresStraightStdDev;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SignalContainer;
@@ -47,17 +47,17 @@ public abstract class GeometryTriangleStockAlgorithmBase extends StockAlgorithm 
 		this.minLineName = init.getExecutionName() + "_Min";
 		this.minLine = createLsqStdDev(init, minSubExecutionName, minLineName);
 
-		this.acceptableLineLevel = init.getSettings().getDoubleSetting("L", 0.5).getValue();
+		this.acceptableLineLevel = init.getSettings().getDoubleSetting("L", 0.5);
 
-		this.acceptableXfrom = init.getSettings().getDoubleSetting("XF", 1.0).getValue();
-		this.acceptableXto = init.getSettings().getDoubleSetting("XT", 2.0).getValue();
+		this.acceptableXfrom = init.getSettings().getDoubleSetting("XF", 1.0);
+		this.acceptableXto = init.getSettings().getDoubleSetting("XT", 2.0);
 	}
 
 	private LeastSquaresStraightStdDev createLsqStdDev(StockAlgorithmInit init, String subExecutionName, String name) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.addSubExecutionName(subExecutionName);
 		final StockAlgorithmInit newInit = new StockAlgorithmInit(name, init, settings);
-		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 9).getValue());
+		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 9));
 		final LeastSquaresStraightStdDev lsqStdDev = new LeastSquaresStraightStdDev(newInit);
 		return lsqStdDev;
 	}

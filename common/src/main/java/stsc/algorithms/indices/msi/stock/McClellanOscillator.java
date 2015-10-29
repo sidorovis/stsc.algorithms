@@ -2,15 +2,15 @@ package stsc.algorithms.indices.msi.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -24,8 +24,8 @@ public class McClellanOscillator extends StockAlgorithm {
 
 	public McClellanOscillator(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		final Double pSlow = init.getSettings().getDoubleSetting("slowP", 0.1).getValue();
-		final Double pFast = init.getSettings().getDoubleSetting("fastP", 0.05).getValue();
+		final Double pSlow = init.getSettings().getDoubleSetting("slowP", 0.1);
+		final Double pFast = init.getSettings().getDoubleSetting("fastP", 0.05);
 
 		this.slowEmaName = init.getExecutionName() + "_SlowEma";
 		this.slowEma = createEma(slowEmaName, pSlow, init);
@@ -35,7 +35,7 @@ public class McClellanOscillator extends StockAlgorithm {
 	}
 
 	private Ema createEma(String emaName, Double p, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setDouble("P", p);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		final StockAlgorithmInit emaInit = init.createInit(emaName, settings);
@@ -44,7 +44,7 @@ public class McClellanOscillator extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

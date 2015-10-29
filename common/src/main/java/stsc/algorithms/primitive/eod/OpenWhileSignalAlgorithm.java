@@ -18,9 +18,7 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.SideSignal;
 
 /**
- * Algorithm require sub execution with {@link SideSignal} output. This
- * algorithm will open all signaled stocks and keep them open until signal
- * exists. <br/>
+ * Algorithm require sub execution with {@link SideSignal} output. This algorithm will open all signaled stocks and keep them open until signal exists. <br/>
  */
 public final class OpenWhileSignalAlgorithm extends EodAlgorithm {
 
@@ -32,7 +30,7 @@ public final class OpenWhileSignalAlgorithm extends EodAlgorithm {
 
 	public OpenWhileSignalAlgorithm(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.P = init.getSettings().getDoubleSetting("P", 10000.0).getValue();
+		this.P = init.getSettings().getDoubleSetting("P", 10000.0);
 		if (init.getSettings().getSubExecutions().isEmpty())
 			throw new BadAlgorithmException("Open While Signal Algorithm should receive at least one sub-algorithm");
 		this.sideSignalAlgoName = init.getSettings().getSubExecutions().get(0);

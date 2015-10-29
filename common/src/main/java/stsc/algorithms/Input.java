@@ -42,7 +42,7 @@ public final class Input extends StockAlgorithm {
 
 	public Input(StockAlgorithmInit initialize) throws BadAlgorithmException {
 		super(initialize);
-		dayField = fromString(initialize.getSettings().getStringSetting("e", "open").getValue());
+		dayField = fromString(initialize.getSettings().getStringSetting("e", "open"));
 	}
 
 	private DoubleSignal getData(final Day day) {
@@ -64,7 +64,7 @@ public final class Input extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = init.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

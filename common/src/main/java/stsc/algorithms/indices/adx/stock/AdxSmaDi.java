@@ -2,16 +2,16 @@ package stsc.algorithms.indices.adx.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.ListOfDoubleAdapter;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
@@ -36,7 +36,7 @@ public class AdxSmaDi extends StockAlgorithm {
 
 	public AdxSmaDi(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.N = init.getSettings().getIntegerSetting("N", 14).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 14);
 		this.adxDiName = init.getExecutionName() + "_AdxDi";
 		this.adxDi = new AdxDi(new StockAlgorithmInit(adxDiName, init, init.getSettings()));
 
@@ -52,7 +52,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init, String adxSmaDiName, String adxDiAdapterName) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", N);
 		settings.addSubExecutionName(adxDiAdapterName);
 		final StockAlgorithmInit smaInit = new StockAlgorithmInit(adxSmaDiName, init, settings);
@@ -60,7 +60,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private ListOfDoubleAdapter createAdapter(StockAlgorithmInit init, String adxDiAdapterName, int i) throws BadAlgorithmException {
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("I", i);
 		settings.addSubExecutionName(adxDiName);
 		final StockAlgorithmInit adapterInit = new StockAlgorithmInit(adxDiAdapterName, init, settings);
@@ -69,7 +69,7 @@ public class AdxSmaDi extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(ListOfDoubleSignal.class, size));
 	}
 

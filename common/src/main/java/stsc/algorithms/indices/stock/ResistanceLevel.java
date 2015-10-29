@@ -50,17 +50,16 @@ public class ResistanceLevel extends StockAlgorithm {
 	public ResistanceLevel(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		if (init.getSettings().getSubExecutions().size() <= 0) {
-			throw new BadAlgorithmException("sub executions settings for " + ResistanceLevel.class.toString()
-					+ " should have at least one algorithm");
+			throw new BadAlgorithmException("sub executions settings for " + ResistanceLevel.class.toString() + " should have at least one algorithm");
 		}
 		this.subExecutionName = init.getSettings().getSubExecutions().get(0);
-		this.N = init.getSettings().getIntegerSetting("N", 8).getValue();
-		this.M = init.getSettings().getIntegerSetting("M", 66).getValue();
+		this.N = init.getSettings().getIntegerSetting("N", 8);
+		this.M = init.getSettings().getIntegerSetting("M", 66);
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

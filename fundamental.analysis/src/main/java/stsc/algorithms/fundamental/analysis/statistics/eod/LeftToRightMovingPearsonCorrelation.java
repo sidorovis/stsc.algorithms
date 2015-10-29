@@ -21,30 +21,20 @@ import stsc.signals.MapKeyPairToDoubleSignal.Builder;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * {@link LeftToRightMovingPearsonCorrelation} algorithm calculate Moving
- * Pearson Correlation between elements from left list and right list. Elements
- * at left list and at right list could be same (user of algorithm should make
- * sure that elements are not repeatable).
+ * {@link LeftToRightMovingPearsonCorrelation} algorithm calculate Moving Pearson Correlation between elements from left list and right list. Elements at left
+ * list and at right list could be same (user of algorithm should make sure that elements are not repeatable).
  * <hr/>
  * <b>Parameters: </b><br/>
- * 1. N - length of correlation (amount of elements that will be used to
- * calculate correlation); <br/>
- * 2. LE - list of stock names that will be on the left part (divided by '|'
- * symbol); <br/>
- * 3. RE - list of stock names that will be on the right part (divided by '|'
- * symbol); <br/>
- * 4. ALLR - true / false (setting to calculate correlation of LE list with all
- * available elements.
+ * 1. N - length of correlation (amount of elements that will be used to calculate correlation); <br/>
+ * 2. LE - list of stock names that will be on the left part (divided by '|' symbol); <br/>
+ * 3. RE - list of stock names that will be on the right part (divided by '|' symbol); <br/>
+ * 4. ALLR - true / false (setting to calculate correlation of LE list with all available elements.
  * <hr/>
  * <b>Algorithm:</b><br/>
- * For each day algorithm returns {@link MapKeyPairToDoubleSignal} signal. This
- * signal contains map of key-pair (string-string (for example 'spy'-'aapl')) to
- * double value (moving pearson correlation coefficient between 'spy' and
- * 'aapl'). Correlation coefficient calculation algorithm is:
- * https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient.
- * Small addition that encapsulate abstract mathematical algorithm from real
- * life data (missed elements and etc.) if amount of elements (because of some
- * data gaps or whatever) is less then N / 2.0 then correlation is zero.
+ * For each day algorithm returns {@link MapKeyPairToDoubleSignal} signal. This signal contains map of key-pair (string-string (for example 'spy'-'aapl')) to
+ * double value (moving pearson correlation coefficient between 'spy' and 'aapl'). Correlation coefficient calculation algorithm is:
+ * https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient. Small addition that encapsulate abstract mathematical algorithm from real life
+ * data (missed elements and etc.) if amount of elements (because of some data gaps or whatever) is less then N / 2.0 then correlation is zero.
  */
 public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements MovingPearsonCorrelation {
 
@@ -57,10 +47,10 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 
 	public LeftToRightMovingPearsonCorrelation(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
-		this.correlationLength = init.getSettings().getIntegerSetting("N", 22).getValue().intValue();
-		final String leftElementsString = init.getSettings().getStringSetting("LE", "").getValue();
-		final String rightElementsString = init.getSettings().getStringSetting("RE", "").getValue();
-		this.allFromRightSide = init.getSettings().getStringSetting("ALLR", "false").getValue().equals("true");
+		this.correlationLength = init.getSettings().getIntegerSetting("N", 22);
+		final String leftElementsString = init.getSettings().getStringSetting("LE", "");
+		final String rightElementsString = init.getSettings().getStringSetting("RE", "");
+		this.allFromRightSide = init.getSettings().getStringSetting("ALLR", "false").equals("true");
 		for (String e : leftElementsString.split("\\|")) {
 			if (!e.trim().isEmpty())
 				leftElements.add(e.trim());
@@ -73,7 +63,7 @@ public class LeftToRightMovingPearsonCorrelation extends EodAlgorithm implements
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(final EodAlgorithmInit init) throws BadAlgorithmException {
-		final int size = init.getSettings().getIntegerSetting("size", 2).getValue().intValue();
+		final int size = init.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(MapKeyPairToDoubleSignal.class, size));
 	}
 

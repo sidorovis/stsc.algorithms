@@ -2,14 +2,14 @@ package stsc.algorithms.indices.ikh.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
@@ -21,15 +21,15 @@ public class IkhSenkauB extends StockAlgorithm {
 	public IkhSenkauB(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.prototypeName = init.getExecutionName() + "_IhkPrototype";
-		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
-		settings.setInteger("TS", init.getSettings().getIntegerSetting("TL", 52).getValue());
-		settings.setInteger("TM", init.getSettings().getIntegerSetting("TM", 26).getValue());
+		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		settings.setInteger("TS", init.getSettings().getIntegerSetting("TL", 52));
+		settings.setInteger("TM", init.getSettings().getIntegerSetting("TM", 26));
 		this.prototype = new IkhPrototype(init.createInit(prototypeName, settings));
 	}
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		final int size = initialize.getSettings().getIntegerSetting("size", 2).getValue();
+		final int size = initialize.getSettings().getIntegerSetting("size", 2);
 		return Optional.of(new LimitSignalsSerie<>(DoubleSignal.class, size));
 	}
 

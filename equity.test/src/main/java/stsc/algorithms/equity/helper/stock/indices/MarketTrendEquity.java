@@ -45,11 +45,11 @@ public final class MarketTrendEquity extends EodAlgorithm {
 			throw new BadAlgorithmException(MarketTrendEquity.class.toString() + " require at least one sub execution parameter");
 		}
 		subExecution = subExecutions.get(0);
-		positionSharesSize = init.getSettings().getIntegerSetting("PSS", 100).getValue();
-		openLongBorder = init.getSettings().getDoubleSetting("OLB", 60.0).getValue();
-		openShortBorder = init.getSettings().getDoubleSetting("OSB", -60.0).getValue();
-		closeLongBorder = init.getSettings().getDoubleSetting("CLB", 40.0).getValue();
-		closeShortBorder = init.getSettings().getDoubleSetting("CSB", -40.0).getValue();
+		positionSharesSize = init.getSettings().getIntegerSetting("PSS", 100);
+		openLongBorder = init.getSettings().getDoubleSetting("OLB", 60.0);
+		openShortBorder = init.getSettings().getDoubleSetting("OSB", -60.0);
+		closeLongBorder = init.getSettings().getDoubleSetting("CLB", 40.0);
+		closeShortBorder = init.getSettings().getDoubleSetting("CSB", -40.0);
 	}
 
 	@Override

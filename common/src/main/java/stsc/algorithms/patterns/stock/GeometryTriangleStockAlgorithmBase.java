@@ -8,7 +8,7 @@ import java.util.List;
 import org.ejml.factory.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.geometry.stock.LeastSquaresStraightStdDev;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -54,7 +54,7 @@ public abstract class GeometryTriangleStockAlgorithmBase extends StockAlgorithm 
 	}
 
 	private LeastSquaresStraightStdDev createLsqStdDev(StockAlgorithmInit init, String subExecutionName, String name) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.addSubExecutionName(subExecutionName);
 		final StockAlgorithmInit newInit = new StockAlgorithmInit(name, init, settings);
 		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 9).getValue());

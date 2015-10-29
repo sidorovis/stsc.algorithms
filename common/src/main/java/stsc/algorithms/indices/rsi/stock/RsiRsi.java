@@ -2,7 +2,7 @@ package stsc.algorithms.indices.rsi.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -44,14 +44,14 @@ public class RsiRsi extends StockAlgorithm {
 	}
 
 	private Ema createUema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3).getValue());
 		settings.addSubExecutionName(rsiUname);
 		return new Ema(init.createInit(emaUname, settings));
 	}
 
 	private Ema createDema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3).getValue());
 		settings.addSubExecutionName(rsiDname);
 		return new Ema(init.createInit(emaDname, settings));

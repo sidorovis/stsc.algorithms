@@ -11,7 +11,7 @@ public final class AlgorithmSettingsTest {
 
 	@Test
 	public void testAlgorithmsSettings() {
-		final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl as = new AlgorithmConfigurationImpl();
 		Assert.assertNull(as.getString("a"));
 		Assert.assertNotNull(as.setDouble("a", new Double(14.05)));
 		Assert.assertNotNull(as.setDouble("b", 14.05));
@@ -25,7 +25,7 @@ public final class AlgorithmSettingsTest {
 
 	@Test
 	public void testGetIntegerDoubleTypes() throws BadAlgorithmException {
-		final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl as = new AlgorithmConfigurationImpl();
 		as.setInteger("asd", Integer.valueOf(15));
 		as.setInteger("4asd", Integer.valueOf(1231));
 		as.setDouble("param", Double.valueOf(1231.0));

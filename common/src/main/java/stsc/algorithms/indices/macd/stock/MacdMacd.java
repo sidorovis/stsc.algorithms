@@ -2,7 +2,7 @@ package stsc.algorithms.indices.macd.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -43,7 +43,7 @@ public class MacdMacd extends StockAlgorithm {
 	}
 
 	private Ema createEma(String name, StockAlgorithmInit init, int length) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setDouble("P", 2.0 / (1.0 + length));
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		return new Ema(init.createInit(name, settings));

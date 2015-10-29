@@ -2,7 +2,7 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.SmStDev;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
@@ -43,14 +43,14 @@ public class Cci extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl smaSettings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl smaSettings = new AlgorithmConfigurationImpl();
 		smaSettings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
 		smaSettings.addSubExecutionName(typicalPriceName);
 		return new Sma(init.createInit(smaName, smaSettings));
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
 		settings.addSubExecutionName(typicalPriceName);
 		settings.addSubExecutionName(smaName);

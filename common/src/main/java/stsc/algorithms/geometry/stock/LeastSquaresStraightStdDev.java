@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -37,7 +37,7 @@ public class LeastSquaresStraightStdDev extends StockAlgorithm {
 		this.subExecutionName = init.getSettings().getSubExecutions().get(0);
 
 		this.lssName = init.getExecutionName() + "_Lss";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", N);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		StockAlgorithmInit lssInit = init.createInit(lssName, settings);

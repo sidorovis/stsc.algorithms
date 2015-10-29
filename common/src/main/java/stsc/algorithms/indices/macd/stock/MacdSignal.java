@@ -2,7 +2,7 @@ package stsc.algorithms.indices.macd.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -41,7 +41,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private MacdMacd createMacd(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("S", init.getSettings().getIntegerSetting("S", 12).getValue());
 		settings.setInteger("L", init.getSettings().getIntegerSetting("L", 26).getValue());
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
@@ -49,7 +49,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", init.getSettings().getIntegerSetting("A", 9).getValue());
 		settings.addSubExecutionName(macdMacdName);
 		return new Sma(init.createInit(smaName, settings));

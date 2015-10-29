@@ -2,7 +2,7 @@ package stsc.algorithms.indices.msi.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -35,7 +35,7 @@ public class McClellanOscillator extends StockAlgorithm {
 	}
 
 	private Ema createEma(String emaName, Double p, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setDouble("P", p);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		final StockAlgorithmInit emaInit = init.createInit(emaName, settings);

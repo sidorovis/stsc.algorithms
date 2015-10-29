@@ -2,7 +2,7 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -26,7 +26,7 @@ public class MarketTrend extends StockAlgorithm {
 		this.stockName = init.getSettings().getStringSetting("SN", "spy").getValue();
 		stockWeExecuteAt = init.getStockName();
 		this.spyAlgoName = init.getExecutionName() + "_Spy";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		final StockAlgorithmInit spyInit = new StockAlgorithmInit(spyAlgoName, init, stockName, settings);
 		spyAlgo = new StockMarketCycle(spyInit);
 	}

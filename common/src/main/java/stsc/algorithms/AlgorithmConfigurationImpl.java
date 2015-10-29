@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import stsc.common.algorithms.AlgorithmSetting;
-import stsc.common.algorithms.AlgorithmSettings;
-import stsc.common.algorithms.MutatingAlgorithmSettings;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 
 /**
  * This is an implementation for collection of {@link AlgorithmSetting} for typed elements. Supported / expected types are: <br/>
@@ -19,43 +18,43 @@ import stsc.common.algorithms.MutatingAlgorithmSettings;
  * 4. sub-execution (string like but store order). <br/>
  * Also implements writeExternal / read (external).
  */
-public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingAlgorithmSettings {
+public final class AlgorithmConfigurationImpl implements MutatingAlgorithmConfiguration {
 
 	private final HashMap<String, Integer> integers;
 	private final HashMap<String, Double> doubles;
 	private final HashMap<String, String> strings;
 	private final ArrayList<String> subExecutions;
 
-	public AlgorithmSettingsImpl() {
+	public AlgorithmConfigurationImpl() {
 		this.integers = new HashMap<>();
 		this.doubles = new HashMap<>();
 		this.strings = new HashMap<>();
 		this.subExecutions = new ArrayList<>();
 	}
 
-	private AlgorithmSettingsImpl(final AlgorithmSettingsImpl cloneFrom) {
+	private AlgorithmConfigurationImpl(final AlgorithmConfigurationImpl cloneFrom) {
 		this.integers = new HashMap<String, Integer>(cloneFrom.integers);
 		this.doubles = new HashMap<String, Double>(cloneFrom.doubles);
 		this.strings = new HashMap<String, String>(cloneFrom.strings);
 		this.subExecutions = new ArrayList<String>(cloneFrom.subExecutions);
 	}
 
-	public AlgorithmSettingsImpl setString(final String key, final String value) {
+	public AlgorithmConfigurationImpl setString(final String key, final String value) {
 		strings.put(key, value);
 		return this;
 	}
 
-	public AlgorithmSettingsImpl setInteger(final String key, final Integer value) {
+	public AlgorithmConfigurationImpl setInteger(final String key, final Integer value) {
 		integers.put(key, value);
 		return this;
 	}
 
-	public AlgorithmSettingsImpl setDouble(final String key, final Double value) {
+	public AlgorithmConfigurationImpl setDouble(final String key, final Double value) {
 		doubles.put(key, value);
 		return this;
 	}
 
-	public AlgorithmSettingsImpl addSubExecutionName(final String subExecutionName) {
+	public AlgorithmConfigurationImpl addSubExecutionName(final String subExecutionName) {
 		subExecutions.add(subExecutionName);
 		return this;
 	}
@@ -123,8 +122,8 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingA
 	}
 
 	@Override
-	public AlgorithmSettingsImpl clone() {
-		return new AlgorithmSettingsImpl(this);
+	public AlgorithmConfigurationImpl clone() {
+		return new AlgorithmConfigurationImpl(this);
 	}
 
 	public void stringHashCode(StringBuilder sb) {

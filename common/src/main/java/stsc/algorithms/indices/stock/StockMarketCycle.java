@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
@@ -44,7 +44,7 @@ public class StockMarketCycle extends StockAlgorithm {
 		this.smaSmallSize = init.getSettings().getIntegerSetting("smaSmallSize", 15).getValue();
 
 		this.inputName = init.getExecutionName() + "_Input";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("size", 500);
 		this.input = new Input(init.createInit(inputName, settings));
 
@@ -67,7 +67,7 @@ public class StockMarketCycle extends StockAlgorithm {
 	}
 
 	private Sma createSmaAlgo(String name, int smaN, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", smaN);
 		settings.setInteger("size", smaN);
 		settings.addSubExecutionName(inputName);

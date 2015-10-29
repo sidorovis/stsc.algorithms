@@ -2,7 +2,7 @@ package stsc.algorithms.indices.adx.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -26,7 +26,7 @@ public class Adxr extends StockAlgorithm {
 		N = init.getSettings().getIntegerSetting("N", 14).getValue();
 
 		this.adxAdxName = init.getExecutionName() + "_AdxAdx";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("size", N + 1);
 		settings.setInteger("N", N);
 		final StockAlgorithmInit adxAdxInit = new StockAlgorithmInit(adxAdxName, init, settings);

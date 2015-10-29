@@ -2,7 +2,7 @@ package stsc.algorithms.indices.adx.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -35,7 +35,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private AdxDxi createAdxDxi(Integer N, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", N);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2).getValue());
 		final StockAlgorithmInit adxDxiInit = new StockAlgorithmInit(adxDxiName, init, settings);
@@ -43,7 +43,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private Sma createSma(Integer nSma, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", nSma);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2).getValue());
 		settings.addSubExecutionName(adxDxiName);

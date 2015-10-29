@@ -2,7 +2,7 @@ package stsc.algorithms.indices.ikh.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -21,7 +21,7 @@ public class IkhTenkan extends StockAlgorithm {
 	public IkhTenkan(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.prototypeName = init.getExecutionName() + "_IhkPrototype";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("TS", init.getSettings().getIntegerSetting("TS", 9).getValue());
 		settings.setInteger("TM", 0);
 		this.prototype = new IkhPrototype(init.createInit(prototypeName, settings));

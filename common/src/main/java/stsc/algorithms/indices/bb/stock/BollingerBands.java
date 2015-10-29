@@ -2,7 +2,7 @@ package stsc.algorithms.indices.bb.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.SmStDev;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
@@ -40,7 +40,7 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", N.getValue());
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
@@ -49,7 +49,7 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", N.getValue());
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());

@@ -2,7 +2,7 @@ package stsc.algorithms.indices.mfi.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -31,7 +31,7 @@ public class MfiMfi extends StockAlgorithm {
 		this.N = init.getSettings().getIntegerSetting("N", 14).getValue();
 
 		this.mfiMfName = init.getExecutionName() + "_mfiMf";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("size", N + 2);
 		this.mfiMf = new MfiMoneyFlow(init.createInit(mfiMfName, settings));
 		this.mfiTpName = mfiMf.getMfiTpName();

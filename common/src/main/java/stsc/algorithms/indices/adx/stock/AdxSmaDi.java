@@ -2,7 +2,7 @@ package stsc.algorithms.indices.adx.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.ListOfDoubleAdapter;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
@@ -52,7 +52,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init, String adxSmaDiName, String adxDiAdapterName) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("N", N);
 		settings.addSubExecutionName(adxDiAdapterName);
 		final StockAlgorithmInit smaInit = new StockAlgorithmInit(adxSmaDiName, init, settings);
@@ -60,7 +60,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private ListOfDoubleAdapter createAdapter(StockAlgorithmInit init, String adxDiAdapterName, int i) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("I", i);
 		settings.addSubExecutionName(adxDiName);
 		final StockAlgorithmInit adapterInit = new StockAlgorithmInit(adxDiAdapterName, init, settings);

@@ -2,7 +2,7 @@ package stsc.algorithms.indices.stock;
 
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -45,13 +45,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createLnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setString("e", "low");
 		return new Input(init.createInit(lnInputName, settings));
 	}
 
 	private MinForNDays createLn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
 		settings.addSubExecutionName(lnInputName);
@@ -59,13 +59,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createHnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setString("e", "high");
 		return new Input(init.createInit(hnInputName, settings));
 	}
 
 	private MaxForNDays createHn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl settings = new AlgorithmConfigurationImpl();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
 		settings.addSubExecutionName(hnInputName);

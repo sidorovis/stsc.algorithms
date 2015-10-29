@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.EodToStockAdapter;
 import stsc.algorithms.geometry.stock.LeastSquaresStraightStdDev;
 import stsc.common.BadSignalException;
@@ -38,10 +38,10 @@ public class MarketTrendOnIndex extends EodAlgorithm implements EodToStockAdapte
 
 		final String adapterName = init.getExecutionName() + "_AdapterToLssv";
 
-		final AlgorithmSettingsImpl adapterSettings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl adapterSettings = new AlgorithmConfigurationImpl();
 		final StockAlgorithmInit adapterInit = init.createInit(adapterName, adapterSettings, stockName);
 		this.adapter = new EodToStockAdapter<DoubleSignal>(adapterInit, this);
-		final AlgorithmSettingsImpl lssvSettings = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl lssvSettings = new AlgorithmConfigurationImpl();
 		lssvSettings.setInteger("N", N);
 		lssvSettings.getSubExecutions().add(adapterName);
 		final StockAlgorithmInit lssvInit = init.createInit(lssvName, lssvSettings, stockName);

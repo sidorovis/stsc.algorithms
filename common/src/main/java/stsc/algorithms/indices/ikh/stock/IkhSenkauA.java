@@ -5,7 +5,7 @@ import java.util.Optional;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -27,14 +27,14 @@ public class IkhSenkauA extends StockAlgorithm {
 		final int tm = init.getSettings().getIntegerSetting("TM", 26);
 		{
 			this.tenkanName = init.getExecutionName() + "_IhkTenkan";
-			final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+			final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 			settings.setInteger("TS", ts);
 			settings.setInteger("TM", tm);
 			this.tenkan = new IkhPrototype(init.createInit(tenkanName, settings));
 		}
 		{
 			this.kijunName = init.getExecutionName() + "_IhkKijun";
-			final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+			final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 			settings.setInteger("TS", tm);
 			settings.setInteger("TM", tm);
 			this.kijun = new IkhPrototype(init.createInit(kijunName, settings));

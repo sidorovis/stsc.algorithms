@@ -5,7 +5,7 @@ import java.util.Optional;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -26,7 +26,7 @@ public class Adxr extends StockAlgorithm {
 		N = init.getSettings().getIntegerSetting("N", 14);
 
 		this.adxAdxName = init.getExecutionName() + "_AdxAdx";
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("size", N + 1);
 		settings.setInteger("N", N);
 		final StockAlgorithmInit adxAdxInit = new StockAlgorithmInit(adxAdxName, init, settings);

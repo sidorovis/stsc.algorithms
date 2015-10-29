@@ -11,7 +11,7 @@ import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.EodAlgorithmInit;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
@@ -38,10 +38,10 @@ public class MarketTrendOnIndex extends EodAlgorithm implements EodToStockAdapte
 
 		final String adapterName = init.getExecutionName() + "_AdapterToLssv";
 
-		final MutatingAlgorithmConfiguration adapterSettings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration adapterSettings = init.createSubAlgorithmConfiguration();
 		final StockAlgorithmInit adapterInit = init.createInit(adapterName, adapterSettings, stockName);
 		this.adapter = new EodToStockAdapter<DoubleSignal>(adapterInit, this);
-		final MutatingAlgorithmConfiguration lssvSettings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration lssvSettings = init.createSubAlgorithmConfiguration();
 		lssvSettings.setInteger("N", N);
 		lssvSettings.getSubExecutions().add(adapterName);
 		final StockAlgorithmInit lssvInit = init.createInit(lssvName, lssvSettings, stockName);

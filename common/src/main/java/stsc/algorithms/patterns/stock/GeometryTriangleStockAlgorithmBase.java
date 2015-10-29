@@ -12,7 +12,7 @@ import stsc.algorithms.geometry.stock.LeastSquaresStraightStdDev;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SignalContainer;
@@ -54,7 +54,7 @@ public abstract class GeometryTriangleStockAlgorithmBase extends StockAlgorithm 
 	}
 
 	private LeastSquaresStraightStdDev createLsqStdDev(StockAlgorithmInit init, String subExecutionName, String name) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.addSubExecutionName(subExecutionName);
 		final StockAlgorithmInit newInit = new StockAlgorithmInit(name, init, settings);
 		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 9));

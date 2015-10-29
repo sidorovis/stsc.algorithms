@@ -6,7 +6,7 @@ import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -35,7 +35,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private AdxDxi createAdxDxi(Integer N, StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", N);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2));
 		final StockAlgorithmInit adxDxiInit = new StockAlgorithmInit(adxDxiName, init, settings);
@@ -43,7 +43,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private Sma createSma(Integer nSma, StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", nSma);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2));
 		settings.addSubExecutionName(adxDxiName);

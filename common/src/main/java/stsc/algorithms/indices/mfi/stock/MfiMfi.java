@@ -5,7 +5,7 @@ import java.util.Optional;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -31,7 +31,7 @@ public class MfiMfi extends StockAlgorithm {
 		this.N = init.getSettings().getIntegerSetting("N", 14);
 
 		this.mfiMfName = init.getExecutionName() + "_mfiMf";
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("size", N + 2);
 		this.mfiMf = new MfiMoneyFlow(init.createInit(mfiMfName, settings));
 		this.mfiTpName = mfiMf.getMfiTpName();

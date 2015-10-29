@@ -6,7 +6,7 @@ import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -41,7 +41,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private MacdMacd createMacd(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("S", init.getSettings().getIntegerSetting("S", 12));
 		settings.setInteger("L", init.getSettings().getIntegerSetting("L", 26));
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
@@ -49,7 +49,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("N", init.getSettings().getIntegerSetting("A", 9));
 		settings.addSubExecutionName(macdMacdName);
 		return new Sma(init.createInit(smaName, settings));

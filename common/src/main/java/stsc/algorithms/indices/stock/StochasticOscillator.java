@@ -6,7 +6,7 @@ import stsc.algorithms.Input;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -45,13 +45,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createLnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setString("e", "low");
 		return new Input(init.createInit(lnInputName, settings));
 	}
 
 	private MinForNDays createLn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5));
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0));
 		settings.addSubExecutionName(lnInputName);
@@ -59,13 +59,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createHnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setString("e", "high");
 		return new Input(init.createInit(hnInputName, settings));
 	}
 
 	private MaxForNDays createHn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5));
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0));
 		settings.addSubExecutionName(hnInputName);

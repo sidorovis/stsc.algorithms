@@ -6,7 +6,7 @@ import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -35,7 +35,7 @@ public class McClellanOscillator extends StockAlgorithm {
 	}
 
 	private Ema createEma(String emaName, Double p, StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setDouble("P", p);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		final StockAlgorithmInit emaInit = init.createInit(emaName, settings);

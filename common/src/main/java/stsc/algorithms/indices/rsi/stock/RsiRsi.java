@@ -6,7 +6,7 @@ import stsc.algorithms.indices.primitive.stock.Ema;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
@@ -44,14 +44,14 @@ public class RsiRsi extends StockAlgorithm {
 	}
 
 	private Ema createUema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3));
 		settings.addSubExecutionName(rsiUname);
 		return new Ema(init.createInit(emaUname, settings));
 	}
 
 	private Ema createDema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
+		final MutableAlgorithmConfiguration settings = init.createSubAlgorithmConfiguration();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3));
 		settings.addSubExecutionName(rsiDname);
 		return new Ema(init.createInit(emaDname, settings));

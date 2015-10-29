@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import stsc.common.FromToPeriod;
 import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.AlgorithmSettings;
-import stsc.common.algorithms.EodAlgorithmInit;
 import stsc.common.algorithms.MutatingAlgorithmSettings;
-import stsc.common.algorithms.StockAlgorithmInit;
 
 /**
  * This is an implementation for collection of {@link AlgorithmSetting} for typed elements. Supported / expected types are: <br/>
@@ -24,22 +21,12 @@ import stsc.common.algorithms.StockAlgorithmInit;
  */
 public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingAlgorithmSettings {
 
-	private final FromToPeriod period;
 	private final HashMap<String, Integer> integers;
 	private final HashMap<String, Double> doubles;
 	private final HashMap<String, String> strings;
 	private final ArrayList<String> subExecutions;
 
-	public AlgorithmSettingsImpl(final StockAlgorithmInit init) {
-		this(init.getSettings().getPeriod());
-	}
-
-	public AlgorithmSettingsImpl(final EodAlgorithmInit init) {
-		this(init.getSettings().getPeriod());
-	}
-
-	public AlgorithmSettingsImpl(final FromToPeriod period) {
-		this.period = period;
+	public AlgorithmSettingsImpl() {
 		this.integers = new HashMap<>();
 		this.doubles = new HashMap<>();
 		this.strings = new HashMap<>();
@@ -47,7 +34,6 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingA
 	}
 
 	private AlgorithmSettingsImpl(final AlgorithmSettingsImpl cloneFrom) {
-		this.period = cloneFrom.period;
 		this.integers = new HashMap<String, Integer>(cloneFrom.integers);
 		this.doubles = new HashMap<String, Double>(cloneFrom.doubles);
 		this.strings = new HashMap<String, String>(cloneFrom.strings);
@@ -139,11 +125,6 @@ public final class AlgorithmSettingsImpl implements AlgorithmSettings, MutatingA
 	@Override
 	public AlgorithmSettingsImpl clone() {
 		return new AlgorithmSettingsImpl(this);
-	}
-
-	@Override
-	public FromToPeriod getPeriod() {
-		return period;
 	}
 
 	public void stringHashCode(StringBuilder sb) {

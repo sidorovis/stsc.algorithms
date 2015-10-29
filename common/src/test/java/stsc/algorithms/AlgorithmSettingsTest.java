@@ -3,7 +3,6 @@ package stsc.algorithms;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.testhelper.TestAlgorithmsHelper;
 import stsc.common.Settings;
 import stsc.common.algorithms.AlgorithmSetting;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -12,7 +11,7 @@ public final class AlgorithmSettingsTest {
 
 	@Test
 	public void testAlgorithmsSettings() {
-		final AlgorithmSettingsImpl as = TestAlgorithmsHelper.getSettings();
+		final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
 		Assert.assertNull(as.getString("a"));
 		Assert.assertNotNull(as.setDouble("a", new Double(14.05)));
 		Assert.assertNotNull(as.setDouble("b", 14.05));
@@ -26,7 +25,7 @@ public final class AlgorithmSettingsTest {
 
 	@Test
 	public void testGetIntegerDoubleTypes() throws BadAlgorithmException {
-		final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl(TestAlgorithmsHelper.getPeriod());
+		final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
 		as.setInteger("asd", Integer.valueOf(15));
 		as.setInteger("4asd", Integer.valueOf(1231));
 		as.setDouble("param", Double.valueOf(1231.0));

@@ -52,7 +52,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init, String adxSmaDiName, String adxDiAdapterName) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N);
 		settings.addSubExecutionName(adxDiAdapterName);
 		final StockAlgorithmInit smaInit = new StockAlgorithmInit(adxSmaDiName, init, settings);
@@ -60,7 +60,7 @@ public class AdxSmaDi extends StockAlgorithm {
 	}
 
 	private ListOfDoubleAdapter createAdapter(StockAlgorithmInit init, String adxDiAdapterName, int i) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("I", i);
 		settings.addSubExecutionName(adxDiName);
 		final StockAlgorithmInit adapterInit = new StockAlgorithmInit(adxDiAdapterName, init, settings);

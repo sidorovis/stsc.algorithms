@@ -21,7 +21,7 @@ public class IkhSenkauB extends StockAlgorithm {
 	public IkhSenkauB(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.prototypeName = init.getExecutionName() + "_IhkPrototype";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("TS", init.getSettings().getIntegerSetting("TL", 52).getValue());
 		settings.setInteger("TM", init.getSettings().getIntegerSetting("TM", 26).getValue());
 		this.prototype = new IkhPrototype(init.createInit(prototypeName, settings));

@@ -43,14 +43,14 @@ public class Cci extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl smaSettings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl smaSettings = new AlgorithmSettingsImpl();
 		smaSettings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
 		smaSettings.addSubExecutionName(typicalPriceName);
 		return new Sma(init.createInit(smaName, smaSettings));
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 5).getValue());
 		settings.addSubExecutionName(typicalPriceName);
 		settings.addSubExecutionName(smaName);

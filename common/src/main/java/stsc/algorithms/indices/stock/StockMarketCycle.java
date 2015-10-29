@@ -44,7 +44,7 @@ public class StockMarketCycle extends StockAlgorithm {
 		this.smaSmallSize = init.getSettings().getIntegerSetting("smaSmallSize", 15).getValue();
 
 		this.inputName = init.getExecutionName() + "_Input";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("size", 500);
 		this.input = new Input(init.createInit(inputName, settings));
 
@@ -67,7 +67,7 @@ public class StockMarketCycle extends StockAlgorithm {
 	}
 
 	private Sma createSmaAlgo(String name, int smaN, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", smaN);
 		settings.setInteger("size", smaN);
 		settings.addSubExecutionName(inputName);

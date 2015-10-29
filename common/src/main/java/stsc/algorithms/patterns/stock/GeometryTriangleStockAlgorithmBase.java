@@ -53,9 +53,8 @@ public abstract class GeometryTriangleStockAlgorithmBase extends StockAlgorithm 
 		this.acceptableXto = init.getSettings().getDoubleSetting("XT", 2.0).getValue();
 	}
 
-	private LeastSquaresStraightStdDev createLsqStdDev(StockAlgorithmInit init, String subExecutionName, String name)
-			throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+	private LeastSquaresStraightStdDev createLsqStdDev(StockAlgorithmInit init, String subExecutionName, String name) throws BadAlgorithmException {
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.addSubExecutionName(subExecutionName);
 		final StockAlgorithmInit newInit = new StockAlgorithmInit(name, init, settings);
 		settings.setInteger("N", init.getSettings().getIntegerSetting("N", 9).getValue());
@@ -72,9 +71,7 @@ public abstract class GeometryTriangleStockAlgorithmBase extends StockAlgorithm 
 	/**
 	 * {{@link #processHelper(Day)}
 	 * 
-	 * @return If there is a cross: Doubles values in next order: a1, a2, b1,
-	 *         b2, cross x, cross y If there is no cross: {@link
-	 *         Collections.emptyList()}
+	 * @return If there is a cross: Doubles values in next order: a1, a2, b1, b2, cross x, cross y If there is no cross: {@link Collections.emptyList()}
 	 */
 	protected List<Double> processHelper(Day day) {
 		final SignalContainer<?> maxSignal = getSignal(maxLineName, day.getDate());

@@ -28,7 +28,7 @@ public class AdxDxi extends StockAlgorithm {
 	}
 
 	private AdxSmaDi createAdxSmaDi(Integer N, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N);
 		final StockAlgorithmInit adxSmaDiInit = new StockAlgorithmInit(adxSmaDiName, init, settings);
 		return new AdxSmaDi(adxSmaDiInit);

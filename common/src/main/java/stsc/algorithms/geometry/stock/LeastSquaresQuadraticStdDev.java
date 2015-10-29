@@ -37,7 +37,7 @@ public class LeastSquaresQuadraticStdDev extends StockAlgorithm {
 		this.subExecutionName = init.getSettings().getSubExecutions().get(0);
 
 		this.lsqName = init.getExecutionName() + "_Lsq";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		StockAlgorithmInit lsqInit = init.createInit(lsqName, settings);

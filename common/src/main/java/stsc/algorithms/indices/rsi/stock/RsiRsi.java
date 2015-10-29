@@ -44,14 +44,14 @@ public class RsiRsi extends StockAlgorithm {
 	}
 
 	private Ema createUema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3).getValue());
 		settings.addSubExecutionName(rsiUname);
 		return new Ema(init.createInit(emaUname, settings));
 	}
 
 	private Ema createDema(final StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setDouble("P", init.getSettings().getDoubleSetting("P", 0.3).getValue());
 		settings.addSubExecutionName(rsiDname);
 		return new Ema(init.createInit(emaDname, settings));

@@ -40,7 +40,7 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N.getValue());
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
@@ -49,7 +49,7 @@ public class BollingerBands extends StockAlgorithm {
 	}
 
 	private SmStDev createStDev(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N.getValue());
 		settings.setInteger("size", size);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());

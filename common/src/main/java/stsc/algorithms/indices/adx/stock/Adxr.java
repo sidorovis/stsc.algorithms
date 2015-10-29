@@ -26,7 +26,7 @@ public class Adxr extends StockAlgorithm {
 		N = init.getSettings().getIntegerSetting("N", 14).getValue();
 
 		this.adxAdxName = init.getExecutionName() + "_AdxAdx";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("size", N + 1);
 		settings.setInteger("N", N);
 		final StockAlgorithmInit adxAdxInit = new StockAlgorithmInit(adxAdxName, init, settings);

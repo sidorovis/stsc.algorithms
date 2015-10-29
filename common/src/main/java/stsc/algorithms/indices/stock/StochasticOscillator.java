@@ -45,13 +45,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createLnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setString("e", "low");
 		return new Input(init.createInit(lnInputName, settings));
 	}
 
 	private MinForNDays createLn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
 		settings.addSubExecutionName(lnInputName);
@@ -59,13 +59,13 @@ public class StochasticOscillator extends StockAlgorithm {
 	}
 
 	private Input createHnInput(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setString("e", "high");
 		return new Input(init.createInit(hnInputName, settings));
 	}
 
 	private MaxForNDays createHn(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("P", init.getSettings().getIntegerSetting("P", 5).getValue());
 		settings.setInteger("SP", init.getSettings().getIntegerSetting("SP", 0).getValue());
 		settings.addSubExecutionName(hnInputName);

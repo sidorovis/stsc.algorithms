@@ -26,7 +26,7 @@ public class MarketTrend extends StockAlgorithm {
 		this.stockName = init.getSettings().getStringSetting("SN", "spy").getValue();
 		stockWeExecuteAt = init.getStockName();
 		this.spyAlgoName = init.getExecutionName() + "_Spy";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		final StockAlgorithmInit spyInit = new StockAlgorithmInit(spyAlgoName, init, stockName, settings);
 		spyAlgo = new StockMarketCycle(spyInit);
 	}

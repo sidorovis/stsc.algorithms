@@ -27,14 +27,14 @@ public class IkhSenkauA extends StockAlgorithm {
 		final int tm = init.getSettings().getIntegerSetting("TM", 26).getValue();
 		{
 			this.tenkanName = init.getExecutionName() + "_IhkTenkan";
-			final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+			final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 			settings.setInteger("TS", ts);
 			settings.setInteger("TM", tm);
 			this.tenkan = new IkhPrototype(init.createInit(tenkanName, settings));
 		}
 		{
 			this.kijunName = init.getExecutionName() + "_IhkKijun";
-			final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+			final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 			settings.setInteger("TS", tm);
 			settings.setInteger("TM", tm);
 			this.kijun = new IkhPrototype(init.createInit(kijunName, settings));

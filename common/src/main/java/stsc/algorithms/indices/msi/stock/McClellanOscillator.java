@@ -35,7 +35,7 @@ public class McClellanOscillator extends StockAlgorithm {
 	}
 
 	private Ema createEma(String emaName, Double p, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setDouble("P", p);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		final StockAlgorithmInit emaInit = init.createInit(emaName, settings);

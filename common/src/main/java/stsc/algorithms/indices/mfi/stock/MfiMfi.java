@@ -31,7 +31,7 @@ public class MfiMfi extends StockAlgorithm {
 		this.N = init.getSettings().getIntegerSetting("N", 14).getValue();
 
 		this.mfiMfName = init.getExecutionName() + "_mfiMf";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("size", N + 2);
 		this.mfiMf = new MfiMoneyFlow(init.createInit(mfiMfName, settings));
 		this.mfiTpName = mfiMf.getMfiTpName();

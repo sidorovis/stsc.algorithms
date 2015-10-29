@@ -35,7 +35,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private AdxDxi createAdxDxi(Integer N, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2).getValue());
 		final StockAlgorithmInit adxDxiInit = new StockAlgorithmInit(adxDxiName, init, settings);
@@ -43,7 +43,7 @@ public class AdxAdx extends StockAlgorithm {
 	}
 
 	private Sma createSma(Integer nSma, StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", nSma);
 		settings.setInteger("size", init.getSettings().getIntegerSetting("size", 2).getValue());
 		settings.addSubExecutionName(adxDxiName);

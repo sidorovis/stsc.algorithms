@@ -43,7 +43,7 @@ public class MacdMacd extends StockAlgorithm {
 	}
 
 	private Ema createEma(String name, StockAlgorithmInit init, int length) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setDouble("P", 2.0 / (1.0 + length));
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		return new Ema(init.createInit(name, settings));

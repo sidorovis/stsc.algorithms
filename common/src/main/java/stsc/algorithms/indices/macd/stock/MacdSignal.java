@@ -41,7 +41,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private MacdMacd createMacd(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("S", init.getSettings().getIntegerSetting("S", 12).getValue());
 		settings.setInteger("L", init.getSettings().getIntegerSetting("L", 26).getValue());
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
@@ -49,7 +49,7 @@ public class MacdSignal extends StockAlgorithm {
 	}
 
 	private Sma createSma(StockAlgorithmInit init) throws BadAlgorithmException {
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", init.getSettings().getIntegerSetting("A", 9).getValue());
 		settings.addSubExecutionName(macdMacdName);
 		return new Sma(init.createInit(smaName, settings));

@@ -37,7 +37,7 @@ public class LeastSquaresStraightStdDev extends StockAlgorithm {
 		this.subExecutionName = init.getSettings().getSubExecutions().get(0);
 
 		this.lssName = init.getExecutionName() + "_Lss";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("N", N);
 		settings.getSubExecutions().addAll(init.getSettings().getSubExecutions());
 		StockAlgorithmInit lssInit = init.createInit(lssName, settings);

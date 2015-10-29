@@ -21,7 +21,7 @@ public class IkhTenkan extends StockAlgorithm {
 	public IkhTenkan(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		this.prototypeName = init.getExecutionName() + "_IhkPrototype";
-		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl settings = new AlgorithmSettingsImpl();
 		settings.setInteger("TS", init.getSettings().getIntegerSetting("TS", 9).getValue());
 		settings.setInteger("TM", 0);
 		this.prototype = new IkhPrototype(init.createInit(prototypeName, settings));

@@ -25,15 +25,13 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 
 /**
- * PositionNDayMStocks open position for n days on m stocks in long and short
- * sides
+ * PositionNDayMStocks open position for n days on m stocks in long and short sides
  */
 public final class PositionNDayMStocks extends EodAlgorithm {
 
 	private final AlgorithmSetting<Integer> n;
 	private final AlgorithmSetting<Integer> m;
 	private final AlgorithmSetting<Double> ps;
-	private final AlgorithmSetting<Integer> lastClosedDays;
 	private final Side side;
 	private final String factorExecutionName;
 
@@ -61,16 +59,13 @@ public final class PositionNDayMStocks extends EodAlgorithm {
 	private final HashMap<String, EodPosition> shortPositions = new HashMap<>();
 	private final HashMap<String, EodPosition> longPositions = new HashMap<>();
 	private Date openDate;
-	private Date lastDate;
 
 	public PositionNDayMStocks(EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
 		n = init.getSettings().getIntegerSetting("n", 22);
 		ps = init.getSettings().getDoubleSetting("ps", 100000.0);
 		m = init.getSettings().getIntegerSetting("m", 2);
-		lastClosedDays = init.getSettings().getIntegerSetting("ld", 10);
 		side = (init.getSettings().getStringSetting("side", "long").getValue().equals("long") ? Side.LONG : Side.SHORT);
-		lastDate = init.getSettings().getPeriod().getTo();
 		final List<String> subExecutions = init.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1)
 			throw new BadAlgorithmException("CrossSignal algorithm should receive one stock based execution with Double");
@@ -79,10 +74,7 @@ public final class PositionNDayMStocks extends EodAlgorithm {
 
 	@Override
 	public void process(final Date date, final HashMap<String, Day> datafeed) throws BadSignalException {
-		if (new LocalDate(date).plusDays(lastClosedDays.getValue()).isAfter(new LocalDate(lastDate))) {
-			close();
-			openDate = null;
-		} else if (longPositions.isEmpty()) {
+		if (longPositions.isEmpty()) {
 			open(date, datafeed);
 		} else {
 			if (openDate != null && new LocalDate(openDate).plusDays(n.getValue()).isBefore(new LocalDate(date))) {

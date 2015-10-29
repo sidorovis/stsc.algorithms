@@ -38,10 +38,10 @@ public class MarketTrendOnIndex extends EodAlgorithm implements EodToStockAdapte
 
 		final String adapterName = init.getExecutionName() + "_AdapterToLssv";
 
-		final AlgorithmSettingsImpl adapterSettings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl adapterSettings = new AlgorithmSettingsImpl();
 		final StockAlgorithmInit adapterInit = init.createInit(adapterName, adapterSettings, stockName);
 		this.adapter = new EodToStockAdapter<DoubleSignal>(adapterInit, this);
-		final AlgorithmSettingsImpl lssvSettings = new AlgorithmSettingsImpl(init);
+		final AlgorithmSettingsImpl lssvSettings = new AlgorithmSettingsImpl();
 		lssvSettings.setInteger("N", N);
 		lssvSettings.getSubExecutions().add(adapterName);
 		final StockAlgorithmInit lssvInit = init.createInit(lssvName, lssvSettings, stockName);

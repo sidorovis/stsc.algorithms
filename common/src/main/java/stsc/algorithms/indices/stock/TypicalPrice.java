@@ -12,7 +12,14 @@ import stsc.common.signals.SerieSignal;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class TypicalPrice extends StockAlgorithm {
+/**
+ * See http://www.metastock.com/Customer/Resources/TAAZ/Default.aspx?p=115 <br/>
+ * This algorithm returns {@link DoubleSignal} limit serie of signals with pre-selected size. <br/>
+ * TypicalPrice = ( High + Low + Close ) / 3. <br/>
+ * Parameters: <br/>
+ * a. size = integer (2 by default) - configure size of output limit serie.
+ */
+public final class TypicalPrice extends StockAlgorithm {
 
 	public TypicalPrice(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);

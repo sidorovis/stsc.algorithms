@@ -13,12 +13,13 @@ import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
 import stsc.common.stocks.Prices;
+import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.SideSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * Returns {@link SideSignal} with {@link Side#LONG} when upper BollingerBands line is lower then {@link Prices#getHigh()} and {@link SideSignal} with
+ * Returns {@link DoubleSignal} with {@link Side#LONG} when upper BollingerBands line is lower then {@link Prices#getHigh()} and {@link SideSignal} with
  * {@link Side#SHORT} when downer BollingerBanks line is higher then {@link Prices#getLow()}.
  */
 public final class BollingerBandsSignaliser extends StockAlgorithm {
@@ -39,7 +40,7 @@ public final class BollingerBandsSignaliser extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		return Optional.of(new LimitSignalsSerie<SerieSignal>(SideSignal.class));
+		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class));
 	}
 
 	@Override
@@ -47,9 +48,9 @@ public final class BollingerBandsSignaliser extends StockAlgorithm {
 		bollingerBands.process(day);
 		final List<Double> bbValue = getSignal(bollingerBandsSubAlgorithmName, day.getDate()).getContent(ListOfDoubleSignal.class).getValues();
 		if (bbValue.get(0) > day.getPrices().getLow()) {
-			addSignal(day.getDate(), new SideSignal(Side.LONG, bbValue.get(0) - day.getPrices().getLow()));
+			addSignal(day.getDate(), new DoubleSignal(-(bbValue.get(0) - day.getPrices().getLow())));
 		} else if (bbValue.get(1) > day.getPrices().getHigh()) {
-			addSignal(day.getDate(), new SideSignal(Side.SHORT, bbValue.get(1) - day.getPrices().getHigh()));
+			addSignal(day.getDate(), new DoubleSignal(bbValue.get(1) - day.getPrices().getHigh()));
 		}
 	}
 

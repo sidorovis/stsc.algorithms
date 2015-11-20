@@ -12,7 +12,6 @@ import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
 import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
-import stsc.signals.SideSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
@@ -41,7 +40,7 @@ public final class TypicalPriceSignaliser extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		return Optional.of(new LimitSignalsSerie<SerieSignal>(SideSignal.class));
+		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class));
 	}
 
 	@Override
@@ -50,10 +49,10 @@ public final class TypicalPriceSignaliser extends StockAlgorithm {
 		final double tp = getSignal(typicalPriceName, day.getDate()).getContent(DoubleSignal.class).getValue();
 		if (day.getPrices().getHigh() - tp >= highPriceShift) {
 			final double signalValue = day.getPrices().getHigh() - tp;
-			addSignal(day.getDate(), new SideSignal(Side.LONG, signalValue));
+			addSignal(day.getDate(), new DoubleSignal(signalValue));
 		} else if (tp - day.getPrices().getLow() >= lowPriceShift) {
 			final double signalValue = day.getPrices().getLow() - tp;
-			addSignal(day.getDate(), new SideSignal(Side.SHORT, -signalValue));
+			addSignal(day.getDate(), new DoubleSignal(signalValue));
 		}
 	}
 }

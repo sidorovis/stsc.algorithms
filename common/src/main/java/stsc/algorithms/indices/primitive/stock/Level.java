@@ -4,14 +4,13 @@ import java.util.Optional;
 
 import stsc.common.BadSignalException;
 import stsc.common.Day;
-import stsc.common.Side;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
-import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalContainer;
+import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
-import stsc.signals.SideSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 public final class Level extends StockAlgorithm {
@@ -27,15 +26,18 @@ public final class Level extends StockAlgorithm {
 
 	@Override
 	public Optional<SignalsSerie<SerieSignal>> registerSignalsClass(StockAlgorithmInit initialize) throws BadAlgorithmException {
-		return Optional.of(new LimitSignalsSerie<SerieSignal>(SideSignal.class));
+		return Optional.of(new LimitSignalsSerie<SerieSignal>(DoubleSignal.class));
 	}
 
 	@Override
 	public void process(Day day) throws BadSignalException {
-		final DoubleSignal s = getSignal(factorName, day.getDate()).getContent(DoubleSignal.class);
-		if (s.getValue() > level)
-			addSignal(day.getDate(), new SideSignal(Side.LONG, s.getValue()));
-		else if (s.getValue() < -level)
-			addSignal(day.getDate(), new SideSignal(Side.SHORT, s.getValue()));
+		final SignalContainer<? extends SerieSignal> signal = getSignal(factorName, day.getDate());
+		if (!signal.isPresent()) {
+			return;
+		}
+		final DoubleSignal s = signal.getContent(DoubleSignal.class);
+		if (s.getValue() > level || s.getValue() < -level) {
+			addSignal(day.getDate(), new DoubleSignal(s.getValue()));
+		}
 	}
 }

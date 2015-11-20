@@ -10,6 +10,7 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.signals.SerieSignal;
+import stsc.common.signals.SignalContainer;
 import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
@@ -39,7 +40,11 @@ public final class Sma extends StockAlgorithm {
 
 	@Override
 	public void process(Day day) throws BadSignalException {
-		final double price = getSignal(subAlgoName, day.getDate()).getContent(DoubleSignal.class).getValue();
+		final SignalContainer<? extends SerieSignal> signal = getSignal(subAlgoName, day.getDate());
+		if (!signal.isPresent()) {
+			return;
+		}
+		final double price = signal.getContent(DoubleSignal.class).getValue();
 		elements.push(price);
 		sum += price;
 		if (elements.size() <= N) {

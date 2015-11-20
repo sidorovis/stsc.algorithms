@@ -44,6 +44,7 @@ public final class TradingSanguinaria extends EodAlgorithm {
 	private final Double negativeCorrelation;
 	private final int minimalStocksForSide;
 	private final double moneyPerShare;
+	private final int openStockPerSide;
 
 	private final String marketTrendStockName = "spy";
 	private final String correlationName;
@@ -63,6 +64,7 @@ public final class TradingSanguinaria extends EodAlgorithm {
 		this.negativeCorrelation = init.getSettings().getDoubleSetting("NC", -0.85);
 		this.minimalStocksForSide = init.getSettings().getIntegerSetting("MS", 2);
 		this.moneyPerShare = init.getSettings().getDoubleSetting("M", 100.0);
+		this.openStockPerSide = init.getSettings().getIntegerSetting("OSPS", 2);
 	}
 
 	private MarketTrend createMarketTrend(EodAlgorithmInit init) throws BadAlgorithmException {
@@ -140,6 +142,7 @@ public final class TradingSanguinaria extends EodAlgorithm {
 	}
 
 	private void openPosition(final Set<String> positive, final Set<String> negative, HashMap<String, Day> datafeed) {
+		int openedSide = 0;
 		for (String stockName : positive) {
 			final double price = datafeed.get(stockName).prices.getClose();
 			final int sharesAmount = (int) Math.floor(moneyPerShare / price);
@@ -147,7 +150,12 @@ public final class TradingSanguinaria extends EodAlgorithm {
 			openLongs.put(stockName, openedSize);
 			if (openedSize > 0)
 				inPosition = true;
+			if (openedSide >= openStockPerSide) {
+				break;
+			}
+			openedSide += 1;
 		}
+		openedSide = 0;
 		for (String stockName : negative) {
 			final double price = datafeed.get(stockName).prices.getClose();
 			final int sharesAmount = (int) Math.floor(moneyPerShare / price);
@@ -155,6 +163,10 @@ public final class TradingSanguinaria extends EodAlgorithm {
 			openShorts.put(stockName, openedSize);
 			if (openedSize > 0)
 				inPosition = true;
+			if (openedSide >= openStockPerSide) {
+				break;
+			}
+			openedSide += 1;
 		}
 	}
 

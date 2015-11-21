@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import stsc.algorithms.fundamental.analysis.statistics.eod.LeftToRightMovingPearsonCorrelation;
+import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.algorithms.indices.stock.MarketTrend;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
@@ -49,8 +50,16 @@ public final class TradingSanguinaria extends EodAlgorithm {
 	private final String marketTrendStockName = "spy";
 	private final String correlationName;
 	private final LeftToRightMovingPearsonCorrelation correlation;
+
 	private final String marketTrendName;
 	private final MarketTrend marketTrend;
+
+	private final String marketTrendSmaName;
+	private final Sma marketTrendSma;
+
+	private final double marketTrendSmaBorder;
+
+	private final boolean tradeOnCrysis;
 
 	public TradingSanguinaria(final EodAlgorithmInit init) throws BadAlgorithmException {
 		super(init);
@@ -60,16 +69,27 @@ public final class TradingSanguinaria extends EodAlgorithm {
 		this.correlation = createCorrelation(init);
 		this.marketTrendName = init.getExecutionName() + "_MarketTrend";
 		this.marketTrend = createMarketTrend(init);
+		this.marketTrendSmaName = init.getExecutionName() + "_MarketTrendSma";
+		this.marketTrendSma = createMarketTrendSma(init);
 		this.positiveCorrelation = init.getSettings().getDoubleSetting("PC", 0.85);
 		this.negativeCorrelation = init.getSettings().getDoubleSetting("NC", -0.85);
 		this.minimalStocksForSide = init.getSettings().getIntegerSetting("MS", 2);
 		this.moneyPerShare = init.getSettings().getDoubleSetting("M", 100.0);
 		this.openStockPerSide = init.getSettings().getIntegerSetting("OSPS", 2);
+		this.marketTrendSmaBorder = init.getSettings().getDoubleSetting("MTSB", 50.0);
+		this.tradeOnCrysis = init.getSettings().getIntegerSetting("TOC", 0) == 1;
 	}
 
 	private MarketTrend createMarketTrend(EodAlgorithmInit init) throws BadAlgorithmException {
 		final MutableAlgorithmConfiguration configuration = init.createSubAlgorithmConfiguration();
 		return new MarketTrend(init.createStockInit(marketTrendName, configuration, marketTrendStockName));
+	}
+
+	private Sma createMarketTrendSma(EodAlgorithmInit init) throws BadAlgorithmException {
+		final MutableAlgorithmConfiguration configuration = init.createSubAlgorithmConfiguration();
+		configuration.addSubExecutionName(marketTrendName);
+		configuration.setInteger("N", init.getSettings().getIntegerSetting("MTS", 52));
+		return new Sma(init.createStockInit(marketTrendSmaName, configuration, marketTrendStockName));
 	}
 
 	private LeftToRightMovingPearsonCorrelation createCorrelation(EodAlgorithmInit init) throws BadAlgorithmException {
@@ -92,6 +112,7 @@ public final class TradingSanguinaria extends EodAlgorithm {
 			return;
 		}
 		this.marketTrend.process(datafeed.get(marketTrendStockName));
+		this.marketTrendSma.process(datafeed.get(marketTrendStockName));
 		if (inPosition) {
 			inPositionLength += 1;
 			if (inPositionLength > openLength) {
@@ -99,8 +120,8 @@ public final class TradingSanguinaria extends EodAlgorithm {
 			}
 			return;
 		}
-		final double marketTrend = getSignal(marketTrendStockName, marketTrendName, date).getContent(DoubleSignal.class).getValue();
-		if (marketTrend > 0.0) {
+		final double marketTrendSma = getSignal(marketTrendStockName, marketTrendSmaName, date).getContent(DoubleSignal.class).getValue();
+		if (marketTrendSma > marketTrendSmaBorder) {
 			final Map<KeyPair, Double> correlationCoefficients = getSignal(correlationName, date).getContent(MapKeyPairToDoubleSignal.class).getValues();
 			final Set<String> positive = new HashSet<>();
 			final Set<String> negative = new HashSet<>();
@@ -121,6 +142,30 @@ public final class TradingSanguinaria extends EodAlgorithm {
 			}
 			if (positive.size() > minimalStocksForSide && negative.size() > minimalStocksForSide) {
 				openPosition(positive, negative, datafeed);
+			}
+			return;
+		}
+		if (tradeOnCrysis && marketTrendSma < -marketTrendSmaBorder) {
+			final Map<KeyPair, Double> correlationCoefficients = getSignal(correlationName, date).getContent(MapKeyPairToDoubleSignal.class).getValues();
+			final Set<String> positive = new HashSet<>();
+			final Set<String> negative = new HashSet<>();
+			for (Entry<KeyPair, Double> e : correlationCoefficients.entrySet()) {
+				final KeyPair k = e.getKey();
+				if (k.contain(globalMarketIndex)) {
+					if (e.getValue() > positiveCorrelation) {
+						final String stockName = getAnother(k);
+						if (!isGlobal(stockName) && !isRegion(stockName))
+							positive.add(stockName);
+					}
+					if (e.getValue() < negativeCorrelation) {
+						final String stockName = getAnother(k);
+						if (!isGlobal(stockName) && !isRegion(stockName))
+							negative.add(stockName);
+					}
+				}
+			}
+			if (positive.size() > minimalStocksForSide && negative.size() > minimalStocksForSide) {
+				openPosition(negative, positive, datafeed);
 			}
 		}
 	}

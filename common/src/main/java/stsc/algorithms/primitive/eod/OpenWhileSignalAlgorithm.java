@@ -15,6 +15,7 @@ import stsc.common.algorithms.EodAlgorithmInit;
 import stsc.common.signals.SignalContainer;
 import stsc.common.signals.SignalsSerie;
 import stsc.common.signals.SerieSignal;
+import stsc.signals.DoubleSignal;
 import stsc.signals.SideSignal;
 
 /**
@@ -56,11 +57,11 @@ public final class OpenWhileSignalAlgorithm extends EodAlgorithm {
 					longPositions.remove(stockName);
 				}
 			} else {
-				final Optional<SideSignal> ss = isSignal.getSignal(SideSignal.class);
+				final Optional<DoubleSignal> ss = isSignal.getSignal(DoubleSignal.class);
 				if (!ss.isPresent()) {
 					return;
 				}
-				final Side signalSide = ss.get().getSide();
+				final Side signalSide = (ss.get().getValue() >= 0.0) ? Side.LONG : Side.SHORT;
 				if (signalSide == Side.LONG && !longPositions.containsKey(stockName)) {
 					final int sharesSize = getSharesSize(i.getValue().getPrices().getOpen());
 					longPositions.put(stockName, new EodPosition(stockName, Side.LONG, sharesSize));

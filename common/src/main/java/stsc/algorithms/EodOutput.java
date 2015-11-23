@@ -17,17 +17,20 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.CommonSignalsSerie;
 
 /**
- * End of day output algorithm. Pretty the same with {@link Output} but for end
- * of day algorithm. TODO consider possibility to unite with {@link Output} at
- * one compilation unit.
+ * End of day output algorithm. Pretty the same with {@link Output} but for end of day algorithm. <br/>
+ * TODO consider possibility to unite with {@link Output} at one compilation unit. <br/>
+ * 
+ * @input_parameters sub execution algorithm.
+ * @output_type {@link DoubleSignal} class.
+ * @output_description get signal and add new signal value from sub-execution serie.
  */
 public final class EodOutput extends EodAlgorithm {
 
-	final String fromExecution;
+	private final String fromExecution;
 
 	public EodOutput(EodAlgorithmInit initialize) throws BadAlgorithmException {
 		super(initialize);
-		List<String> subExecutions = initialize.getSettings().getSubExecutions();
+		final List<String> subExecutions = initialize.getSettings().getSubExecutions();
 		if (subExecutions.size() < 1)
 			throw new BadAlgorithmException("out algorithm should have at least one sub-execution");
 		this.fromExecution = subExecutions.get(0);
@@ -40,7 +43,7 @@ public final class EodOutput extends EodAlgorithm {
 
 	@Override
 	public void process(Date date, HashMap<String, Day> datafeed) throws BadSignalException {
-		SignalContainer<? extends SerieSignal> signalHandler = getSignal(fromExecution, date);
+		final SignalContainer<? extends SerieSignal> signalHandler = getSignal(fromExecution, date);
 		if (signalHandler == null)
 			return;
 		final Optional<? extends SerieSignal> signal = signalHandler.getValue();

@@ -15,7 +15,13 @@ import stsc.signals.series.LimitSignalsSerie;
 /**
  * {@link EodToStockAdapter} algorithm is an adapter that provide possibility to 'reduce back' data from end of day algorithms to stock algorithm.<br/>
  * For example you have end of day algorithm (A) that calculate serie of double's based on some internal ideas and you want to use stock based algorithm (B)
- * over that serie. You can adapt output of (A) to use it as input to (B).
+ * over that serie. <br/>
+ * You can adapt output of (A) to use it as input to (B).<br/>
+ * This algorithm could be created only as sub-algorithm and require {@link SignalGenerator} implementation.
+ * 
+ * @input_parameters 'size' - integer value: size of output serie;
+ * @output_type {@link DoubleSignal} class;
+ * @output_description get signal from signal generator and returns it to serie.
  */
 public final class EodToStockAdapter<S extends SerieSignal> extends StockAlgorithm {
 

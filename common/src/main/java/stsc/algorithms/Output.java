@@ -17,11 +17,15 @@ import stsc.signals.SideSignal;
 import stsc.signals.series.CommonSignalsSerie;
 
 /**
- * Output algorithm is an adaptor algorithm that could be used for graphical
- * representation of another algorithms result. <br/>
+ * Output algorithm is an adaptor algorithm that could be used for graphical representation of another algorithms result. <br/>
  * Could adapt: <br/>
  * 1. {@link DoubleSignal} (to {@link DoubleSignal}); <br/>
- * 2. {@link SideSignal} (to {@link DoubleSignal}
+ * 2. {@link SideSignal} (to {@link DoubleSignal}); <br/>
+ * 3. {@link IntegerSignal} (to {@link DoubleSignal});
+ * 
+ * @input_parameter sub-execution algorithm;
+ * @output_type {@link DoubleSignal} class;
+ * @output_description adapted value from sub-execution algorithm.
  */
 public final class Output extends StockAlgorithm {
 

@@ -14,8 +14,14 @@ import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * Algorithm could be used for adapting {@link ListOfDoubleSignal} to {@link DoubleSignal}. This could be used to represent data into graphic view on user
- * interface. Or to generate serie of double's. //
+ * Algorithm could be used for adapting {@link ListOfDoubleSignal} to {@link DoubleSignal}. <br/>
+ * This could be used to represent data into graphic view on user interface. <br/>
+ * Or to generate serie of double's.
+ * 
+ * @input_parameter I - integer value (index of element into input serie); <br/>
+ * @input_parameter sub-execution with {@link ListOfDoubleSignal} output; <br/>
+ * @output_type {@link DoubleSignal} class;
+ * @output_description value from input sub-execution serie result (markered with index I).
  */
 public final class ListOfDoubleAdapter extends StockAlgorithm {
 

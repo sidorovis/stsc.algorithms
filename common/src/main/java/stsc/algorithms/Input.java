@@ -13,7 +13,12 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
 /**
- * Input on Stock Algorithm - returns series of data from {@link Day}. With 'e' parameter, you can return OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day} class.
+ * Input on Stock Algorithm - returns series of data from {@link Day}.
+ * 
+ * @input_parameter 'e' parameter returns OPEN, HIGH, LOW, CLOSE, VALUE from {@link Day} class; <br/>
+ * @input_parameter 'size' - integer value: size of output serie;
+ * @output_type {@link DoubleSignal} class;
+ * @output_description double value from initial prices serie (open / high / low / close / value) field of {@link Day} object.
  */
 public final class Input extends StockAlgorithm {
 

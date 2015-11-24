@@ -13,7 +13,16 @@ import stsc.common.signals.SignalsSerie;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class FibonacciRetracementBearStdDev extends StockAlgorithm {
+/**
+ * Coefficient that describes correlation between input sub-execution serie and fibonacci bear (down-side) retracement. <br/>
+ * https://en.wikipedia.org/wiki/Fibonacci_retracement
+ * 
+ * @input_parameters N - integer (4 by default) <br/>
+ *                   size - integer (6) size of output serie sub-execution algorithm;
+ * @output_type {@link DoubleSignal} class.
+ * @output_description standard deviation for sub-execution serie from expected fibonacci retracement (bear direction). 
+ */
+public final class FibonacciRetracementBearStdDev extends StockAlgorithm {
 
 	public final static double ratios[] = { 0.0, 0.236068, 0.381966, 0.618034 };
 

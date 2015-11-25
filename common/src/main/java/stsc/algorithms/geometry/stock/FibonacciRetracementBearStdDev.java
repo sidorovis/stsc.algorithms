@@ -18,9 +18,10 @@ import stsc.signals.series.LimitSignalsSerie;
  * https://en.wikipedia.org/wiki/Fibonacci_retracement
  * 
  * @input_parameters N - integer (4 by default) <br/>
- *                   size - integer (6) size of output serie sub-execution algorithm;
+ *                   size - integer (6) size of output serie <br/>
+ *                   sub-execution algorithm;
  * @output_type {@link DoubleSignal} class.
- * @output_description standard deviation for sub-execution serie from expected fibonacci retracement (bear direction). 
+ * @output_description standard deviation for sub-execution serie from expected fibonacci retracement (bear direction).
  */
 public final class FibonacciRetracementBearStdDev extends StockAlgorithm {
 

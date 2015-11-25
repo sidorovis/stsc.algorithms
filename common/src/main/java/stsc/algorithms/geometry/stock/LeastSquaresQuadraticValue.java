@@ -18,7 +18,16 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class LeastSquaresQuadraticValue extends StockAlgorithm {
+/**
+ * This algorithm returns next predicted value if we will think about last N values as about quadratic function.
+ * 
+ * @input_parameters N - integer (5) size of elements for least squares quadratic algorithm; <br/>
+ *                   size - integer (2) size of output serie;<br/>
+ *                   sub-execution - serie to predict value at;
+ * @output_type {@link ListOfDoubleSignal};
+ * @output_description using least squares quadratic algorithm for N last values returns - a0, a1, a2 as quadratic function coefficients.
+ */
+public final class LeastSquaresQuadraticValue extends StockAlgorithm {
 
 	private final int N;
 	private final String subExecutionName;

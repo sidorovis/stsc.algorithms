@@ -17,7 +17,18 @@ import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class LeastSquaresQuadraticStdDev extends StockAlgorithm {
+/**
+ * LeastSquaresQuadraticStdDev - on stock algorithm that calculate standard deviation distance of sub-execution serie from {@link LeastSquaresQuadraticValue}.
+ * This algorithm returns standard deviation for differences between real and expected by least squares quadratic value (a0 + a1 * x + a2 * Math.pow(x, 2.0))
+ * for last N values.
+ * 
+ * @input_parameters N - integer (4 by default); <br/>
+ *                   size - integer (2) size of output serie; <br/>
+ *                   sub-execution algorithm;
+ * @output_type {@link DoubleSignal} class.
+ * @output_description standard deviation difference for sub-execution serie from expected least squares quadratic value.
+ */
+public final class LeastSquaresQuadraticStdDev extends StockAlgorithm {
 
 	private final int N;
 	private final String subExecutionName;

@@ -24,6 +24,14 @@ import stsc.signals.series.LimitSignalsSerie;
  * a2. ALL = 100d (will setup 'up to 100d' and 'down to -100d').<br/>
  * You can use UP, DOWN and ALL together but result will be unpredictable. By default UP = {@link Double#MAX_VALUE}, DOWN = -{@link Double#MAX_VALUE}, ALL =
  * {@link Double#MAX_VALUE}.
+ * 
+ * @input_parameters UP - double ({@link Double#MAX_VALUE}) <br/>
+ *                   DOWN - double (- {@link Double#MAX_VALUE}) <br/>
+ *                   ALL - double ({@link Double#MAX_VALUE}) <br/>
+ *                   size - integer (2) size of output serie) <br/>
+ *                   sub-execution algorithm;
+ * @output_type {@link DoubleSignal} class.
+ * @output_description if input value > UP -> UP, if input value < DOWN -> DOWN, if input value out of (-ALL, +ALL) border -> +/- ALL, otherwise input value.
  */
 public final class AlgorithmsLimiter extends StockAlgorithm {
 

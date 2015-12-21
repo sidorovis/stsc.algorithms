@@ -13,7 +13,15 @@ import stsc.common.stocks.Prices;
 import stsc.signals.DoubleSignal;
 import stsc.signals.series.LimitSignalsSerie;
 
-public class AdiClv extends StockAlgorithm {
+/**
+ * AdiClv - on stock algortithm https://en.wikipedia.org/wiki/Accumulation/distribution_index
+ * 
+ * @input_parameters size - integer (2) size of output serie <br/>
+ * @output_type {@link DoubleSignal} class.
+ * @output_description if high == low then returns 0.0 else: <br/>
+ *                     clv = ( close - low - ( high - close ) ) / ( high - low ).
+ */
+public final class AdiClv extends StockAlgorithm {
 
 	public AdiClv(StockAlgorithmInit init) throws BadAlgorithmException {
 		super(init);

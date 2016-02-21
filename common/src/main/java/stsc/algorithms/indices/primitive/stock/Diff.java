@@ -36,9 +36,9 @@ public class Diff extends StockAlgorithm {
 
 	@Override
 	public void process(Day day) throws BadSignalException {
-		SignalContainer<? extends SerieSignal> from = getSignal(fromExecution, day.getDate());
-		SignalContainer<? extends SerieSignal> to = getSignal(toExecution, day.getDate());
-		if (from != null && to != null) {
+		final SignalContainer<? extends SerieSignal> from = getSignal(fromExecution, day.getDate());
+		final SignalContainer<? extends SerieSignal> to = getSignal(toExecution, day.getDate());
+		if (from.isPresent() && to.isPresent()) {
 			final double fromValue = from.getContent(DoubleSignal.class).getValue();
 			final double toValue = to.getContent(DoubleSignal.class).getValue();
 			addSignal(day.getDate(), new DoubleSignal(fromValue - toValue));
